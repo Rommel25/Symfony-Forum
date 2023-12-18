@@ -15,7 +15,7 @@ class Lyceen
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Lycée = null;
+    private ?string $Lycee = null;
 
     #[ORM\Column(length: 255)]
     private ?string $Email = null;
@@ -31,14 +31,14 @@ class Lyceen
         return $this->id;
     }
 
-    public function getLycée(): ?string
+    public function getLycee(): ?string
     {
-        return $this->Lycée;
+        return $this->Lycee;
     }
 
-    public function setLycée(string $Lycée): static
+    public function setLycee(string $Lycee): static
     {
-        $this->Lycée = $Lycée;
+        $this->Lycee = $Lycee;
 
         return $this;
     }
