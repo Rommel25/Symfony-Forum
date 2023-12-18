@@ -14,6 +14,30 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        {% extends 'base.html.twig' %}
+
+        {% block title %}Liste des ateliers{% endblock %}
+
+        {% block body %}
+            <h1>Liste des ateliers</h1>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for atelier in ateliers %}
+                        <tr>
+                            <td>{{ atelier.nom }}</td>
+                            <td>{{ atelier.description }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endblock %}
+
     </body>
 </html>
