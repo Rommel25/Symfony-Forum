@@ -15,7 +15,7 @@ class Atelier
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'atelier', targetEntity: metier::class)]
+    #[ORM\OneToMany(mappedBy: 'atelier', targetEntity: Metier::class)]
     private Collection $metier;
 
     #[ORM\Column(length: 255)]
@@ -30,10 +30,14 @@ class Atelier
     #[ORM\ManyToOne(inversedBy: 'ateliers')]
     private ?Salle $salle = null;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'ateliers')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->metier = new ArrayCollection();
         $this->intervenants = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -133,6 +137,33 @@ class Atelier
     public function setSalle(?Salle $salle): static
     {
         $this->salle = $salle;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addAtelier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeAtelier($this);
+        }
 
         return $this;
     }
