@@ -7768,7 +7768,11 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+<<<<<<< HEAD
 >>>>>>> afff069 (get atelier from bdd)
+=======
+>>>>>>> c95da75 (get atelier from bdd)
+>>>>>>> 8a74183 (get atelier from bdd)
         }
       },
       "notification-url": "https://packagist.org/downloads/",
@@ -8017,7 +8021,11 @@
                 "source": "https://github.com/Masterminds/html5-php/tree/2.8.1"
             },
             "time": "2023-05-10T11:58:31+00:00"
+<<<<<<< HEAD
 >>>>>>> afff069 (get atelier from bdd)
+=======
+>>>>>>> c95da75 (get atelier from bdd)
+>>>>>>> 8a74183 (get atelier from bdd)
         },
         {
           "name": "Roman Borschel",
@@ -18191,5 +18199,9 @@
 =======
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
+<<<<<<< HEAD
 >>>>>>> afff069 (get atelier from bdd)
+=======
+>>>>>>> c95da75 (get atelier from bdd)
+>>>>>>> 8a74183 (get atelier from bdd)
 }
