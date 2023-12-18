@@ -33,7 +33,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $Lycee = null;
 
-    #[ORM\ManyToMany(targetEntity: atelier::class, inversedBy: 'users')]
+    #[ORM\ManyToMany(targetEntity: Atelier::class, inversedBy: 'users')]
     private Collection $ateliers;
 
     #[ORM\Column(length: 255)]

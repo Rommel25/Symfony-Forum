@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
@@ -38,6 +39,11 @@ class SecurityController extends AbstractController
             $mail = $formData->getEmail();
             $user = $userrepo->findOneBy(["email"=>$mail]);
             if(md5($formData->getPassword()) == $user->getPassword()){
+                $token = new UsernamePasswordToken($user, "firewall", ["ROLE_USER"], $user->getRoles());
+                $this->container->get('security.token_storage')->setToken($token);
+
+//                $this->container->get('session')->set('_security_main', serialize($token));
+
                 if ($user->getRoles() == ['ROLE_ADMIN', 'ROLE_USER']){
                     return $this->redirectToRoute('app_admin');
                 }else{
