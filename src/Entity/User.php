@@ -31,7 +31,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $password = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Lycee = null;
+    private ?string $lycee = null;
 
     #[ORM\ManyToMany(targetEntity: Atelier::class, inversedBy: 'users')]
     private Collection $ateliers;
@@ -43,7 +43,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?\DateTimeInterface $date_inscription = null;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
-    private ?Lycee $lycee = null;
+    private ?Lycee $Lycee = null;
 
     public function __toString(): string
     {
@@ -90,7 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-//        $roles[] = 'ROLE_USER';
+        //        $roles[] = 'ROLE_USER';
 
 
         return array_unique($roles);
@@ -129,10 +129,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function getLycee(): ?string
     {
+        return $this->lycee;
+    }
+
+    public function setLycee(string $lycee): static
+    {
+        $this->lycee = $lycee;
+
+        return $this;
+    }
+
+    public function getLyceeEnt(): ?string
+    {
         return $this->Lycee;
     }
 
-    public function setLycee(?string $Lycee): static
+    public function setLyceeEnt(?string $Lycee): static
     {
         $this->Lycee = $Lycee;
 

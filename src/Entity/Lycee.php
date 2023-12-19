@@ -18,12 +18,12 @@ class Lycee
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'lycee', targetEntity: User::class)]
+    #[ORM\OneToMany(mappedBy: 'Lycee', targetEntity: User::class)]
     private Collection $users;
 
     public function __toString(): string
     {
-        return $this->id + $this->nom;
+        return $this->id . $this->nom;
     }
 
     public function __construct()
