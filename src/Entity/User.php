@@ -39,12 +39,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $telephone = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: "datetime")]
     private ?\DateTimeInterface $date_inscription = null;
+
+    #[ORM\ManyToOne(inversedBy: 'users')]
+    private ?Lycee $lycee = null;
 
     public function __construct()
     {
         $this->ateliers = new ArrayCollection();
+        $this->date_inscription = new \DateTime();
     }
 
     public function getId(): ?int
