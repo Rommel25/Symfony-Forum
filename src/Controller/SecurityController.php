@@ -36,21 +36,24 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $formData = $form->getData();
             $mail = $formData->getEmail();
-            $user = $userrepo->findOneBy(["email"=>$mail]);
-//            dd(md5($formData->getPassword()), $user->getPassword());
-            if(md5($formData->getPassword()) == $user->getPassword()){
+            $user = $userrepo->findOneBy(["email" => $mail]);
+            //            dd(md5($formData->getPassword()), $user->getPassword());
+            if (md5($formData->getPassword()) == $user->getPassword()) {
 
-                if ($user->getRoles() == ['ROLE_ADMIN']){
+                if ($user->getRoles() == ['ROLE_ADMIN']) {
 
                     $token = new UsernamePasswordToken($user, "firewall", ["ROLE_ADMIN"], $user->getRoles());
                     $this->container->get('security.token_storage')->setToken($token);
                     return $this->redirectToRoute('app_index', [$user]);
-                }else{
+                } elseif ($user->getRoles() == ['ROLE_LYCEE']) {
+                    $token = new UsernamePasswordToken($user, "firewall", ["ROLE_LYCEE"], $user->getRoles());
+                    $this->container->get('security.token_storage')->setToken($token);
+                    return $this->redirectToRoute('app_index');
+                } else {
                     $token = new UsernamePasswordToken($user, "firewall", ["ROLE_USER"], $user->getRoles());
                     $this->container->get('security.token_storage')->setToken($token);
                     return $this->redirectToRoute('app_index');
                 }
-
             }
         }
         // render login form

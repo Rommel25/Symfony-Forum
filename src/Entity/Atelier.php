@@ -36,6 +36,11 @@ class Atelier
     #[ORM\ManyToMany(targetEntity: Ressources::class, inversedBy: 'ateliers')]
     private Collection $ressource;
 
+    public function __toString(): string
+    {
+        return $this->id + $this->salle;
+    }
+
 
     public function __construct()
     {

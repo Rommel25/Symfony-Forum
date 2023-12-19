@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\IntervenantRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: IntervenantRepository::class)]
@@ -30,6 +32,19 @@ class Intervenant
 
     #[ORM\ManyToOne(inversedBy: 'intervenants')]
     private ?Atelier $atelier = null;
+
+    #[ORM\OneToMany(mappedBy: 'intervenant_id', targetEntity: IntervenantEdition::class)]
+    private Collection $intervenantEditions;
+
+    public function __construct()
+    {
+        $this->intervenantEditions = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->prenom + $this->nom;
+    }
 
     public function getId(): ?int
     {
@@ -104,6 +119,36 @@ class Intervenant
     public function setAtelier(?Atelier $atelier): static
     {
         $this->atelier = $atelier;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, IntervenantEdition>
+     */
+    public function getIntervenantEditions(): Collection
+    {
+        return $this->intervenantEditions;
+    }
+
+    public function addIntervenantEdition(IntervenantEdition $intervenantEdition): static
+    {
+        if (!$this->intervenantEditions->contains($intervenantEdition)) {
+            $this->intervenantEditions->add($intervenantEdition);
+            $intervenantEdition->setIntervenantId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIntervenantEdition(IntervenantEdition $intervenantEdition): static
+    {
+        if ($this->intervenantEditions->removeElement($intervenantEdition)) {
+            // set the owning side to null (unless already changed)
+            if ($intervenantEdition->getIntervenantId() === $this) {
+                $intervenantEdition->setIntervenantId(null);
+            }
+        }
 
         return $this;
     }

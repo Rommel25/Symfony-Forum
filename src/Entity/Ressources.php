@@ -21,6 +21,11 @@ class Ressources
     #[ORM\ManyToMany(targetEntity: Atelier::class, mappedBy: 'ressource')]
     private Collection $ateliers;
 
+    public function __toString(): string
+    {
+        return $this->id + $this->url;
+    }
+
     public function __construct()
     {
         $this->ateliers = new ArrayCollection();

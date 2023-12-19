@@ -21,6 +21,11 @@ class Questionnaire
     #[ORM\ManyToMany(targetEntity: Question::class, inversedBy: 'questionnaires')]
     private Collection $Question;
 
+    public function __toString(): string
+    {
+        return $this->id;
+    }
+
     public function __construct()
     {
         $this->edition = new ArrayCollection();
