@@ -1,3 +1,4 @@
+{% extends 'base.html.twig' %}
 
 {% block title %}Hello Sur le profile{% endblock %}
 
@@ -8,12 +9,20 @@
     </style>
 
     <div class="example-wrapper">
-        {{ user.email }}
-        {{ user.lycee }}
-        {{ user.telephone }}
-        {{ date|date('Y-m-d H:i:s') }}
-        {% for atelier in user.ateliers %}
-        {{ atelier.id }}
-        {% endfor %}
+        <div class="container">
+            <div class="row">
+                <div class="col-6 text-primary">
+                    {{ user.email }}
+                </div>
+                <div class="col-6">
+                    {{ user.lycee }}
+                </div>
+            </div>
+                {{ user.telephone }}
+                {{ date|date('Y-m-d H:i:s') }}
+                {% for atelier in user.ateliers %}
+                {{ atelier.id }}
+                {% endfor %}
+        </div>
     </div>
 {% endblock %}
