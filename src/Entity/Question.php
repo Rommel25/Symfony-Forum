@@ -24,6 +24,11 @@ class Question
     #[ORM\ManyToMany(targetEntity: Questionnaire::class, mappedBy: 'Question')]
     private Collection $questionnaires;
 
+    public function __toString(): string
+    {
+        return $this->id;
+    }
+
     public function __construct()
     {
         $this->questionnaires = new ArrayCollection();

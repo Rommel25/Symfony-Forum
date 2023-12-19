@@ -27,6 +27,11 @@ class Edition
     #[ORM\ManyToOne(inversedBy: 'edition')]
     private ?Sponsor $sponsor = null;
 
+    public function __toString(): string
+    {
+        return $this->id + $this->annee;
+    }
+
     public function __construct()
     {
         $this->ateliers = new ArrayCollection();

@@ -21,6 +21,11 @@ class Sponsor
     #[ORM\OneToMany(mappedBy: 'sponsor', targetEntity: Edition::class)]
     private Collection $edition;
 
+    public function __toString(): string
+    {
+        return $this->id + $this->nom;
+    }
+
     public function __construct()
     {
         $this->edition = new ArrayCollection();

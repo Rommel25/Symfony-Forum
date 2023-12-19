@@ -45,6 +45,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Lycee $lycee = null;
 
+    public function __toString(): string
+    {
+        return $this->id + $this->email;
+    }
+
     public function __construct()
     {
         $this->ateliers = new ArrayCollection();

@@ -31,6 +31,11 @@ class Intervenant
     #[ORM\ManyToOne(inversedBy: 'intervenants')]
     private ?Atelier $atelier = null;
 
+    public function __toString(): string
+    {
+        return $this->prenom + $this->nom;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

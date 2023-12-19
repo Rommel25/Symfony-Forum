@@ -27,6 +27,11 @@ class Salle
     #[ORM\OneToMany(mappedBy: 'salle', targetEntity: Atelier::class)]
     private Collection $ateliers;
 
+    public function __toString(): string
+    {
+        return $this->nom + $this->etage;
+    }
+
     public function __construct()
     {
         $this->ateliers = new ArrayCollection();
