@@ -38,7 +38,7 @@ class Atelier
 
     public function __toString(): string
     {
-        return $this->id + $this->secteur;
+        return $this->id + $this->salle;
     }
 
 
