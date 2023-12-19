@@ -47,7 +47,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function __toString(): string
     {
-        return $this->id . $this->email;
+        // return $this->id + $this->email;
+        return $this->id . ' ' . $this->email;
     }
 
     public function __construct()

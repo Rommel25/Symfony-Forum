@@ -23,7 +23,7 @@ class Sponsor
 
     public function __toString(): string
     {
-        return $this->id . $this->nom;
+        return $this->id . ' ' . $this->nom;
     }
 
     public function __construct()

@@ -37,24 +37,24 @@ class Metier
 
     public function getCompetences(): array
     {
-        return $this->Competences;
+        return $this->competences;
     }
 
-    public function setCompetences(array $Competences): static
+    public function setCompetences(array $competences): static
     {
-        $this->Competences = $Competences;
+        $this->competences = $competences;
 
         return $this;
     }
 
     public function getActivites(): array
     {
-        return $this->Activites;
+        return $this->activites;
     }
 
-    public function setActivites(array $Activites): static
+    public function setActivites(array $activites): static
     {
-        $this->Activites = $Activites;
+        $this->activites = $activites;
 
         return $this;
     }

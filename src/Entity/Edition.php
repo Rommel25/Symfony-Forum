@@ -27,6 +27,9 @@ class Edition
     #[ORM\ManyToOne(inversedBy: 'edition')]
     private ?Sponsor $sponsor = null;
 
+    #[ORM\OneToMany(mappedBy: 'edition_id', targetEntity: IntervenantEdition::class)]
+    private Collection $intervenantEditions;
+
     public function __toString(): string
     {
         return $this->id . $this->annee;
@@ -36,6 +39,7 @@ class Edition
     {
         $this->ateliers = new ArrayCollection();
         $this->questionnaires = new ArrayCollection();
+        $this->intervenantEditions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -117,6 +121,36 @@ class Edition
     public function setSponsor(?Sponsor $sponsor): static
     {
         $this->sponsor = $sponsor;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, IntervenantEdition>
+     */
+    public function getIntervenantEditions(): Collection
+    {
+        return $this->intervenantEditions;
+    }
+
+    public function addIntervenantEdition(IntervenantEdition $intervenantEdition): static
+    {
+        if (!$this->intervenantEditions->contains($intervenantEdition)) {
+            $this->intervenantEditions->add($intervenantEdition);
+            $intervenantEdition->setEditionId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeIntervenantEdition(IntervenantEdition $intervenantEdition): static
+    {
+        if ($this->intervenantEditions->removeElement($intervenantEdition)) {
+            // set the owning side to null (unless already changed)
+            if ($intervenantEdition->getEditionId() === $this) {
+                $intervenantEdition->setEditionId(null);
+            }
+        }
 
         return $this;
     }

@@ -1,19 +1,70 @@
+{% extends 'base.html.twig' %}
+
 
 {% block title %}Hello Sur le profile{% endblock %}
 
 {% block body %}
+
     <style>
         .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
         .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     </style>
-
+    
+<div class="bg-light pt-3 pb-3">
     <div class="example-wrapper">
-        {{ user.email }}
-        {{ user.lycee }}
-        {{ user.telephone }}
-        {{ date|date('Y-m-d H:i:s') }}
-        {% for atelier in user.ateliers %}
-        {{ atelier.id }}
-        {% endfor %}
+        <div class="container">
+            <div class="row mb-2">
+                <h1>{{ "Profile:" }}</h1>
+            </div>
+            <div class="row">
+                <div class="col-6 mb-4 card">
+                    <div class="card-body">
+                        <div class="email card-title">
+                            {{ "Adresse Email:" }}
+                        </div>
+                        <p class="text-info card-text">
+                            {{ user.email }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 mb-4 card">
+                    <div class="card-body">
+                        <div class="lycee card-title">
+                            {{ "Nom Lycée:" }}
+                        </div>
+                        <p class="text-info card-text">
+                            {{ user.lycee }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 card">
+                    <div class="card-body">
+                        <div class="tel">
+                            {{ "Téléphone:" }}
+                        </div>
+                        <p class="text-info card-text">
+                            {{ user.telephone }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 card">
+                    <div class="card-body">
+                        <div class="date card-title">
+                            {{ "Date:" }}
+                        </div>
+                        <p class="text-info card-text">
+                            {{ date|date('Y-m-d H:i:s') }}
+                        </p>
+                    </div>
+                </div>
+                {% for atelier in user.ateliers %}
+                {{ atelier.id }}
+                {% endfor %}
+            </div>
+        </div>
     </div>
+</div>
 {% endblock %}
+

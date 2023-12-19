@@ -23,7 +23,8 @@ class Ressources
 
     public function __toString(): string
     {
-        return $this->id . $this->url;
+        // return $this->id + $this->url;
+        return $this->id . ' ' . $this->url;
     }
 
     public function __construct()
