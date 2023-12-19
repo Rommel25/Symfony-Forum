@@ -29,7 +29,7 @@ class Salle
 
     public function __toString(): string
     {
-        return $this->nom + $this->etage;
+        return $this->nom . $this->etage;
     }
 
     public function __construct()

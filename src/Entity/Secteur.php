@@ -26,7 +26,7 @@ class Secteur
 
     public function __toString(): string
     {
-        return $this->nom + $this->description;
+        return " " . $this->nom . $this->description;
     }
 
     public function __construct()

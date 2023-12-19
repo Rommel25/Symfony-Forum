@@ -6,6 +6,8 @@ use App\Repository\AtelierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: AtelierRepository::class)]
 class Atelier
@@ -16,13 +18,13 @@ class Atelier
     private ?int $id = null;
 
     #[ORM\OneToMany(mappedBy: 'atelier', targetEntity: Metier::class)]
-    private Collection $metier;
+    private ?Collection $metier = null;
 
     #[ORM\ManyToOne(inversedBy: 'ateliers')]
     private ?Secteur $secteur = null;
 
     #[ORM\OneToMany(mappedBy: 'atelier', targetEntity: Intervenant::class)]
-    private Collection $intervenants;
+    private ?Collection $intervenants;
 
     #[ORM\ManyToOne(inversedBy: 'ateliers')]
     private ?Salle $salle = null;
@@ -38,7 +40,7 @@ class Atelier
 
     public function __toString(): string
     {
-        return $this->id + $this->salle;
+        return $this->id;
     }
 
 
@@ -50,6 +52,17 @@ class Atelier
         $this->edition = new ArrayCollection();
         $this->ressource = new ArrayCollection();
     }
+
+//    public function removeMetier(Metier $metier): self
+//    {
+//        if ($this->metier->contains($metier)) {
+//            $this->metier->removeElement($metier);
+//            // déclenchez la suppression de l'entité Metier
+//            $metier->setAtelier(null);
+//        }
+//
+//        return $this;
+//    }
 
     public function getId(): ?int
     {

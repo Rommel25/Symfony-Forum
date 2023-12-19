@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\MetierRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 #[ORM\Entity(repositoryClass: MetierRepository::class)]
 class Metier
@@ -15,17 +17,17 @@ class Metier
     private ?int $id = null;
 
     #[ORM\Column(type: Types::ARRAY)]
-    private array $competences = [];
+    private ?array $competences = [];
 
     #[ORM\Column(type: Types::ARRAY)]
-    private array $activites = [];
+    private ?array $activites = [];
 
-    #[ORM\ManyToOne(inversedBy: 'metier')]
+    #[ORM\ManyToOne(targetEntity: Atelier::class, inversedBy: 'metier')]
     private ?Atelier $atelier = null;
 
     public function __toString(): string
     {
-        return $this->id;
+        return $this->atelier;
     }
 
     public function getId(): ?int

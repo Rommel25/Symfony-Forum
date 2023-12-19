@@ -29,7 +29,7 @@ class Edition
 
     public function __toString(): string
     {
-        return $this->id + $this->annee;
+        return $this->id . $this->annee;
     }
 
     public function __construct()

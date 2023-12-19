@@ -44,7 +44,7 @@ class SecurityController extends AbstractController
 
                     $token = new UsernamePasswordToken($user, "firewall", ["ROLE_ADMIN"], $user->getRoles());
                     $this->container->get('security.token_storage')->setToken($token);
-                    return $this->redirectToRoute('app_index', [$user]);
+                    return $this->redirectToRoute('app_admin', [$user]);
                 }else{
                     $token = new UsernamePasswordToken($user, "firewall", ["ROLE_USER"], $user->getRoles());
                     $this->container->get('security.token_storage')->setToken($token);
@@ -62,6 +62,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/logout", name="app_logout")
      */
+    #[Route('/logout', name: 'app_logout', methods: ['GET', 'POST'])]
     public function logout()
     {
         // laisser vide
