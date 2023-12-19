@@ -3,6 +3,15 @@
 namespace App\Controller\Admin;
 
 use App\Entity\Atelier;
+use App\Entity\Ressources;
+use App\Entity\Secteur;
+use App\Entity\Sponsor;
+use App\Entity\Salle;
+use App\Entity\Metier;
+use App\Entity\Question;
+use App\Entity\Questionnaire;
+use App\Entity\IntervenantEdition;
+use App\Entity\Lycee;
 use App\Entity\Edition;
 use App\Entity\User;
 use App\Entity\Intervenant;
@@ -18,26 +27,10 @@ class DashboardController extends AbstractDashboardController
     #[Route('/admin', name: 'admin')]
     public function index(): Response
     {
-//        return parent::index();
         $routeBuilder = $this->container->get(AdminUrlGenerator::class);
                $url = $routeBuilder->setController(AtelierCrudController::class)->generateUrl();
 
                return $this->redirect($url);
-        // Option 1. You can make your dashboard redirect to some common page of your backend
-        //
-        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        // return $this->redirect($adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
-
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
-        // if ('jane' === $this->getUser()->getUsername()) {
-        //     return $this->redirect('...');
-        // }
-
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
-        // return $this->render('some/path/my-dashboard.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -52,5 +45,14 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Users', 'fas fa-user', User::class);
         yield MenuItem::linkToCrud('Edition', 'fas fa-edit', Edition::class);
         yield MenuItem::linkToCrud('Intervenant', 'fas fa-user', Intervenant::class);
+        // yield MenuItem::linkToCrud('IntervenantEdition', 'fas fa-user', IntervenantEdition::class);
+        yield MenuItem::linkToCrud('Lycées', 'fas fa-school', Lycee::class);
+        yield MenuItem::linkToCrud('Métiers', 'fas fa-briefcase', Metier::class);
+        yield MenuItem::linkToCrud('Questions', 'fas fa-question', Question::class);
+        yield MenuItem::linkToCrud('Questionnaire', 'fas fa-question', Questionnaire::class);
+        yield MenuItem::linkToCrud('Ressources', 'fas fa-book', Ressources::class);
+        yield MenuItem::linkToCrud('Salles', 'fas fa-question', Salle::class);
+        yield MenuItem::linkToCrud('Secteurs', 'fas fa-vector-square', Secteur::class);
+        yield MenuItem::linkToCrud('Sponsors', 'fas fa-copyright', Sponsor::class);
     }
 }
