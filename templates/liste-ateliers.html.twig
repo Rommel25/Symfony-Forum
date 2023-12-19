@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('styles/app.css') }}">
+            {{ ux_controller_link_tags() }}
+        {% endblock %}
+
+        {% block javascripts %}
+            {{ importmap() }}
+        {% endblock %}
+    </head>
+    <body>
+        {% extends 'base.html.twig' %}
+
+        {% block title %}Liste des ateliers{% endblock %}
+
+        {% block body %}
+            <h1>Liste des ateliers</h1>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for atelier in ateliers %}
+                        <tr>
+                            <td>{{ atelier.nom }}</td>
+                            <td>{{ atelier.description }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endblock %}
+    </body>
+</html>
