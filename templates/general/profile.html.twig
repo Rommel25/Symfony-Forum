@@ -13,39 +13,50 @@
 <div class="bg-light pt-3 pb-3">
     <div class="example-wrapper">
         <div class="container">
+            <div class="row mb-2">
+                <h1>{{ "Profile:" }}</h1>
+            </div>
             <div class="row">
-                <div class="col-6 mb-4">
-                    <div class="email">
-                        {{ "Adresse Email:" }}
-                    </div>
-                    <div class="text-info">
-                        {{ user.email }}
+                <div class="col-6 mb-4 card">
+                    <div class="card-body">
+                        <div class="email card-title">
+                            {{ "Adresse Email:" }}
+                        </div>
+                        <p class="text-info card-text">
+                            {{ user.email }}
+                        </p>
                     </div>
                 </div>
-                <div class="col-6 mb-4">
-                    <div class="lycee">
-                        {{ "Nom Lycée:" }}
-                    </div>
-                    <div class="text-info">
-                    {{ user.lycee }}
+                <div class="col-6 mb-4 card">
+                    <div class="card-body">
+                        <div class="lycee card-title">
+                            {{ "Nom Lycée:" }}
+                        </div>
+                        <p class="text-info card-text">
+                            {{ user.lycee }}
+                        </p>
                     </div>
                 </div>
             </div>
             <div class="row">
-                <div class="col-6">
-                    <div class="tel">
-                        {{ "Téléphone:" }}
-                    </div>
-                    <div class="text-info">
-                        {{ user.telephone }}
+                <div class="col-6 card">
+                    <div class="card-body">
+                        <div class="tel">
+                            {{ "Téléphone:" }}
+                        </div>
+                        <p class="text-info card-text">
+                            {{ user.telephone }}
+                        </p>
                     </div>
                 </div>
-                <div class="col-6">
-                    <div class="date">
-                        {{ "Date:" }}
-                    </div>
-                    <div class="text-info">
-                        {{ date|date('Y-m-d H:i:s') }}
+                <div class="col-6 card">
+                    <div class="card-body">
+                        <div class="date card-title">
+                            {{ "Date:" }}
+                        </div>
+                        <p class="text-info card-text">
+                            {{ date|date('Y-m-d H:i:s') }}
+                        </p>
                     </div>
                 </div>
                 {% for atelier in user.ateliers %}
