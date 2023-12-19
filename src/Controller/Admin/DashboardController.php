@@ -17,9 +17,8 @@ class DashboardController extends AbstractDashboardController
     {
 //        return parent::index();
         $routeBuilder = $this->container->get(AdminUrlGenerator::class);
-               $url = $routeBuilder->setController(AtelierCrudController::class)->generateUrl();
-
-               return $this->redirect($url);
+        $url = $routeBuilder->setController(AtelierCrudController::class)->generateUrl();
+        return $this->redirect($url);
         // Option 1. You can make your dashboard redirect to some common page of your backend
         //
         // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
@@ -45,6 +44,7 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
-        yield MenuItem::linkToCrud('Comments', 'fas fa-comments', Atelier::class);
+//        yield MenuItem::linkToDashboard('Dashboard', 'fa fa-home');
+         yield MenuItem::linkToCrud('The Label', 'fas fa-list', Atelier::class);
     }
 }
