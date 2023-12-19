@@ -1,28 +1,59 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Hello Sur le profile{% endblock %}
 
 {% block body %}
+
     <style>
         .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
         .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
     </style>
-
+    
+<div class="bg-light pt-3 pb-3">
     <div class="example-wrapper">
         <div class="container">
             <div class="row">
-                <div class="col-6 text-primary">
-                    {{ user.email }}
+                <div class="col-6 mb-4">
+                    <div class="email">
+                        {{ "Adresse Email:" }}
+                    </div>
+                    <div class="text-info">
+                        {{ user.email }}
+                    </div>
                 </div>
-                <div class="col-6">
+                <div class="col-6 mb-4">
+                    <div class="lycee">
+                        {{ "Nom Lycée:" }}
+                    </div>
+                    <div class="text-info">
                     {{ user.lycee }}
+                    </div>
                 </div>
             </div>
-                {{ user.telephone }}
-                {{ date|date('Y-m-d H:i:s') }}
+            <div class="row">
+                <div class="col-6">
+                    <div class="tel">
+                        {{ "Téléphone:" }}
+                    </div>
+                    <div class="text-info">
+                        {{ user.telephone }}
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="date">
+                        {{ "Date:" }}
+                    </div>
+                    <div class="text-info">
+                        {{ date|date('Y-m-d H:i:s') }}
+                    </div>
+                </div>
                 {% for atelier in user.ateliers %}
                 {{ atelier.id }}
                 {% endfor %}
+            </div>
         </div>
     </div>
+</div>
 {% endblock %}
+
