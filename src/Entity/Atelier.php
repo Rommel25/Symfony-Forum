@@ -18,9 +18,6 @@ class Atelier
     #[ORM\OneToMany(mappedBy: 'atelier', targetEntity: Metier::class)]
     private Collection $metier;
 
-    #[ORM\Column(length: 255)]
-    private ?string $ressources = null;
-
     #[ORM\ManyToOne(inversedBy: 'ateliers')]
     private ?Secteur $secteur = null;
 
@@ -33,11 +30,20 @@ class Atelier
     #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'ateliers')]
     private Collection $users;
 
+    #[ORM\ManyToMany(targetEntity: Edition::class, inversedBy: 'ateliers')]
+    private Collection $edition;
+
+    #[ORM\ManyToMany(targetEntity: Ressources::class, inversedBy: 'ateliers')]
+    private Collection $ressource;
+
+
     public function __construct()
     {
         $this->metier = new ArrayCollection();
         $this->intervenants = new ArrayCollection();
         $this->users = new ArrayCollection();
+        $this->edition = new ArrayCollection();
+        $this->ressource = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -71,18 +77,6 @@ class Atelier
                 $metier->setAtelier(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getRessources(): ?string
-    {
-        return $this->ressources;
-    }
-
-    public function setRessources(string $ressources): static
-    {
-        $this->ressources = $ressources;
 
         return $this;
     }
@@ -167,4 +161,53 @@ class Atelier
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Edition>
+     */
+    public function getEdition(): Collection
+    {
+        return $this->edition;
+    }
+
+    public function addEdition(Edition $edition): static
+    {
+        if (!$this->edition->contains($edition)) {
+            $this->edition->add($edition);
+        }
+
+        return $this;
+    }
+
+    public function removeEdition(Edition $edition): static
+    {
+        $this->edition->removeElement($edition);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ressources>
+     */
+    public function getRessource(): Collection
+    {
+        return $this->ressource;
+    }
+
+    public function addRessource(Ressources $ressource): static
+    {
+        if (!$this->ressource->contains($ressource)) {
+            $this->ressource->add($ressource);
+        }
+
+        return $this;
+    }
+
+    public function removeRessource(Ressources $ressource): static
+    {
+        $this->ressource->removeElement($ressource);
+
+        return $this;
+    }
+
 }
