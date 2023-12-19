@@ -22,29 +22,14 @@ class UserController extends AbstractController
     {
         $this->entityManager = $entityManager;
     }
-
+//Permet de voir le profil de l'utilisateur
 #[Route('/profile', name: 'app_profile', methods: ['GET', 'POST'])]
 #[IsGranted("ROLE_USER")]
 public function profile(Request $request, AuthenticationUtils $authenticationUtils, Security $security): Response
 {
-    dd($security->getUser());
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        $formData = $form->getData();
-        $mail = $formData->getEmail();
-        $user = $userrepo->findOneBy(["email"=>$mail]);
-        if(md5($formData->getPassword()) == $user->getPassword()){
-            if ($user->getRoles() == ['ROLE_ADMIN', 'ROLE_USER']){
-                return $this->redirectToRoute('app_admin');
-            }else{
-                return $this->redirectToRoute('app_index');
-            }
-
-        }
-    }
-    // render login form
-    return $this->render('security/login.html.twig', [
-        'form' => $form->createView(),
+    return $this->render('general/profile.html.twig', [
+        'user' => $security->getUser(),
+        'date' => $security->getUser()->getDateInscription(),
     ]);
 }
 
