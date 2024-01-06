@@ -6,7 +6,6 @@ use App\Repository\AtelierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 
 #[ORM\Entity(repositoryClass: AtelierRepository::class)]
@@ -17,8 +16,9 @@ class Atelier
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToMany(mappedBy: 'atelier', targetEntity: Metier::class)]
-    private ?Collection $metier = null;
+    #[ORM\ManyToMany(inversedBy: 'atelier', targetEntity: Metier::class)]
+    #[ORM\JoinTable(name: 'atelier_as_metier')]
+    private Collection $metier;
 
     #[ORM\ManyToOne(inversedBy: 'ateliers')]
     private ?Secteur $secteur = null;
@@ -29,18 +29,24 @@ class Atelier
     #[ORM\ManyToOne(inversedBy: 'ateliers')]
     private ?Salle $salle = null;
 
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'ateliers')]
-    private Collection $users;
-
     #[ORM\ManyToMany(targetEntity: Edition::class, inversedBy: 'ateliers')]
     private Collection $edition;
 
     #[ORM\ManyToMany(targetEntity: Ressources::class, inversedBy: 'ateliers')]
     private Collection $ressource;
 
+    #[ORM\ManyToMany(targetEntity: Lyceen::class, mappedBy: 'ateliers')]
+    private Collection $lyceens;
+
+    #[ORM\ManyToMany(targetEntity: Forum::class, mappedBy: 'ateliers')]
+    private Collection $forums;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
+
     public function __toString(): string
     {
-        return $this->id;
+        return $this->nom;
     }
 
 
@@ -48,9 +54,10 @@ class Atelier
     {
         $this->metier = new ArrayCollection();
         $this->intervenants = new ArrayCollection();
-        $this->users = new ArrayCollection();
         $this->edition = new ArrayCollection();
         $this->ressource = new ArrayCollection();
+        $this->lyceens = new ArrayCollection();
+        $this->forums = new ArrayCollection();
     }
 
 //    public function removeMetier(Metier $metier): self
@@ -70,22 +77,37 @@ class Atelier
     }
 
     /**
-     * @return Collection<int, metier>
+     * @return Collection
      */
     public function getMetier(): Collection
     {
         return $this->metier;
     }
 
-    public function addMetier(metier $metier): static
+    /**
+     * @param Collection $metier
+     */
+    public function setMetier(Collection $metier): void
     {
-        if (!$this->metier->contains($metier)) {
-            $this->metier->add($metier);
-            $metier->setAtelier($this);
+        $this->metier = $metier;
+    }
+
+    public function addJob(Metier $job): self
+    {
+        if (!$this->metier->contains($job)) {
+            $this->metier->add($job);
         }
 
         return $this;
     }
+
+    public function removeJob(Metier $job): self
+    {
+        $this->metier->removeElement($job);
+
+        return $this;
+    }
+
 
     public function removeMetier(metier $metier): static
     {
@@ -154,33 +176,6 @@ class Atelier
     }
 
     /**
-     * @return Collection<int, User>
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): static
-    {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addAtelier($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): static
-    {
-        if ($this->users->removeElement($user)) {
-            $user->removeAtelier($this);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, Edition>
      */
     public function getEdition(): Collection
@@ -224,6 +219,72 @@ class Atelier
     public function removeRessource(Ressources $ressource): static
     {
         $this->ressource->removeElement($ressource);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Lyceen>
+     */
+    public function getLyceens(): Collection
+    {
+        return $this->lyceens;
+    }
+
+    public function addLyceen(Lyceen $lyceen): static
+    {
+        if (!$this->lyceens->contains($lyceen)) {
+            $this->lyceens->add($lyceen);
+            $lyceen->addAtelier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLyceen(Lyceen $lyceen): static
+    {
+        if ($this->lyceens->removeElement($lyceen)) {
+            $lyceen->removeAtelier($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Forum>
+     */
+    public function getForums(): Collection
+    {
+        return $this->forums;
+    }
+
+    public function addForum(Forum $forum): static
+    {
+        if (!$this->forums->contains($forum)) {
+            $this->forums->add($forum);
+            $forum->addAtelier($this);
+        }
+
+        return $this;
+    }
+
+    public function removeForum(Forum $forum): static
+    {
+        if ($this->forums->removeElement($forum)) {
+            $forum->removeAtelier($this);
+        }
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }

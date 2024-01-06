@@ -12,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -37,8 +38,12 @@ class AtelierCrudController extends AbstractCrudController
     {
 
         return [
+            Field::new('nom'),
             AssociationField::new('secteur'),
             AssociationField::new('salle'),
+            AssociationField::new('metier'),
+            AssociationField::new('intervenants'),
+            AssociationField::new('ressource'),
 //            CollectionField::new('metier')
 
 //            AssociationField::new('metier')->setCrudController(MetierCrudController::class)

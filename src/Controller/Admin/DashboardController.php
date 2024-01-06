@@ -2,7 +2,10 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Activite;
 use App\Entity\Atelier;
+use App\Entity\Competences;
+use App\Entity\Lyceen;
 use App\Entity\Ressources;
 use App\Entity\Secteur;
 use App\Entity\Sponsor;
@@ -54,5 +57,8 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Salles', 'fas fa-question', Salle::class);
         yield MenuItem::linkToCrud('Secteurs', 'fas fa-vector-square', Secteur::class);
         yield MenuItem::linkToCrud('Sponsors', 'fas fa-copyright', Sponsor::class);
+        yield MenuItem::linkToCrud('Lyceen', 'fas fa-copyright', Lyceen::class);
+        yield MenuItem::linkToCrud('Competences', 'fas fa-copyright', Competences::class);
+        yield MenuItem::linkToCrud('Activites', 'fas fa-copyright', Activite::class);
     }
 }

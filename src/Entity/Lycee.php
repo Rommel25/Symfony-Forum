@@ -18,8 +18,8 @@ class Lycee
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\OneToMany(mappedBy: 'lycee', targetEntity: User::class)]
-    private Collection $users;
+    #[ORM\OneToMany(mappedBy: 'Lycee', targetEntity: Lyceen::class)]
+    private Collection $lyceen;
 
     public function __toString(): string
     {
@@ -28,7 +28,7 @@ class Lycee
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->lyceen = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -49,29 +49,29 @@ class Lycee
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, Lyceen>
      */
-    public function getUsers(): Collection
+    public function getlyceen(): Collection
     {
-        return $this->users;
+        return $this->lyceen;
     }
 
-    public function addUser(User $user): static
+    public function addAtelier(Lyceen $atelier): static
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->setLycee($this);
+        if (!$this->lyceen->contains($atelier)) {
+            $this->lyceen->add($atelier);
+            $atelier->setLycee($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): static
+    public function removeAtelier(Lyceen $atelier): static
     {
-        if ($this->users->removeElement($user)) {
+        if ($this->lyceen->removeElement($atelier)) {
             // set the owning side to null (unless already changed)
-            if ($user->getLycee() === $this) {
-                $user->setLycee(null);
+            if ($atelier->getLycee() === $this) {
+                $atelier->setLycee(null);
             }
         }
 
