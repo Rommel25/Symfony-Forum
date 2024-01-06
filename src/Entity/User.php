@@ -22,7 +22,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $email = null;
 
     #[ORM\Column]
-    private array $roles = [];
+    private array $roles = ["ROLE_USER"];
 
     /**
      * @var string The hashed password
@@ -30,32 +30,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?string $password = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $Lycee = null;
+    #[ORM\Column(length: 255)]
+    private ?string $prenom = null;
 
-    #[ORM\ManyToMany(targetEntity: Atelier::class, inversedBy: 'users')]
-    private Collection $ateliers;
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
     private ?string $telephone = null;
 
-    #[ORM\Column(type: "datetime")]
-    private ?\DateTimeInterface $date_inscription = null;
+    #[ORM\Column]
+    private ?bool $hashed = false;
 
-    #[ORM\ManyToOne(inversedBy: 'users')]
-    private ?Lycee $lycee = null;
+
 
     public function __toString(): string
     {
-        // return $this->id + $this->email;
-        return $this->id . ' ' . $this->email;
+        return $this->prenom . ' ' . $this->id . ' ' . $this->email;
     }
 
-    public function __construct()
-    {
-        $this->ateliers = new ArrayCollection();
-        $this->date_inscription = new \DateTime();
-    }
 
     public function getId(): ?int
     {
@@ -91,7 +84,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-//        $roles[] = 'ROLE_USER';
+        $roles[] = 'ROLE_USER';
 
 
         return array_unique($roles);
@@ -114,7 +107,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setPassword(string $password): static
     {
-        $this->password = $password;
+        $this->password = md5($password);
 
         return $this;
     }
@@ -128,38 +121,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
-    public function getLycee(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->Lycee;
+        return $this->prenom;
     }
 
-    public function setLycee(?string $Lycee): static
+    public function setPrenom(string $prenom): static
     {
-        $this->Lycee = $Lycee;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
-    /**
-     * @return Collection<int, atelier>
-     */
-    public function getAteliers(): Collection
+    public function getNom(): ?string
     {
-        return $this->ateliers;
+        return $this->nom;
     }
 
-    public function addAtelier(atelier $atelier): static
+    public function setNom(string $nom): static
     {
-        if (!$this->ateliers->contains($atelier)) {
-            $this->ateliers->add($atelier);
-        }
-
-        return $this;
-    }
-
-    public function removeAtelier(atelier $atelier): static
-    {
-        $this->ateliers->removeElement($atelier);
+        $this->nom = $nom;
 
         return $this;
     }
@@ -176,14 +157,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getDateInscription(): ?\DateTimeInterface
+    public function isHashed(): ?bool
     {
-        return $this->date_inscription;
+        return $this->hashed;
     }
 
-    public function setDateInscription(\DateTimeInterface $date_inscription): static
+    public function setHashed(bool $hashed): static
     {
-        $this->date_inscription = $date_inscription;
+        $this->hashed = $hashed;
 
         return $this;
     }

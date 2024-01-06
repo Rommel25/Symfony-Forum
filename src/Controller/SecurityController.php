@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Lyceen;
 use App\Entity\User;
 use App\Form\LoginType;
+use App\Form\LyceenType;
 use App\Form\RegisterType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
@@ -37,14 +39,14 @@ class SecurityController extends AbstractController
             $formData = $form->getData();
             $mail = $formData->getEmail();
             $user = $userrepo->findOneBy(["email" => $mail]);
-            //            dd(md5($formData->getPassword()), $user->getPassword());
-            if (md5($formData->getPassword()) == $user->getPassword()) {
-
+//                        dd($formData->getPassword(), $user->getPassword());
+            if ($formData->getPassword() == $user->getPassword()) {
+//                dd('test');
                 if ($user->getRoles() == ['ROLE_ADMIN']) {
 
                     $token = new UsernamePasswordToken($user, "firewall", ["ROLE_ADMIN"], $user->getRoles());
                     $this->container->get('security.token_storage')->setToken($token);
-                    return $this->redirectToRoute('app_index', [$user]);
+                    return $this->redirectToRoute('admin', [$user]);
                 } elseif ($user->getRoles() == ['ROLE_LYCEE']) {
                     $token = new UsernamePasswordToken($user, "firewall", ["ROLE_LYCEE"], $user->getRoles());
                     $this->container->get('security.token_storage')->setToken($token);
@@ -62,26 +64,25 @@ class SecurityController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/logout", name="app_logout")
-     */
-    public function logout()
+    #[Route(path: '/deconnexion', name: 'logout')]
+    public function logout(): void
     {
-        // laisser vide
+        throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
+
 
     //Création de compte
     #[Route('/register', name: 'app_register', methods: ['GET', 'POST'])]
     public function register(Request $request): Response
     {
-        $user = new User();
-        $form = $this->createForm(RegisterType::class, $user);
+        $lyceen = new Lyceen();
+        $form = $this->createForm(LyceenType::class, $lyceen);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword(md5($user->getPassword()));
-            $user->setRoles(["ROLE_USER"]);
-            $this->entityManager->persist($user);
+            $lyceen->getUser()->setPassword(md5($lyceen->getUser()->getPassword()));
+            $lyceen->getUser()->setRoles(["ROLE_USER"]);
+            $this->entityManager->persist($lyceen);
             $this->entityManager->flush();
 
             return $this->redirectToRoute('app_login');
