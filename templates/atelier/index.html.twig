@@ -13,12 +13,15 @@
                         Atelier n° {{ atelier.id }}
                     </button>
                 </h2>
-                <div id="collapse{{ atelier.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
-                    <div class="accordion-body">
-                        Nom de l'atelier :<strong> {{ atelier.nom }}.</strong><br>
-                        Nom de la salle :<strong> {{ atelier.salle }}</strong><br>
-                        Nom du secteur :<strong> {{ atelier.secteur }}</strong><br>
-                    </div>
+                
+                <!-- Add the "Register" button here -->
+                <div class="accordion-body">
+                    Nom de l'atelier :<strong> {{ atelier.nom }}.</strong><br>
+                    Nom de la salle :<strong> {{ atelier.salle }}</strong><br>
+                    Nom du secteur :<strong> {{ atelier.secteur }}</strong><br>
+                    
+                    <!-- Register button with a data attribute to store atelier ID -->
+                    <button class="btn btn-primary register-button" data-atelier-id="{{ atelier.id }}">S'inscrire a cet atelier</button>
                 </div>
             </div>
         {% endfor %}
