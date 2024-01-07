@@ -50,11 +50,11 @@ class SecurityController extends AbstractController
                 } elseif ($user->getRoles() == ['ROLE_LYCEE']) {
                     $token = new UsernamePasswordToken($user, "firewall", ["ROLE_LYCEE"], $user->getRoles());
                     $this->container->get('security.token_storage')->setToken($token);
-                    return $this->redirectToRoute('app_index');
+                    return $this->redirectToRoute('app_atelier');
                 } else {
                     $token = new UsernamePasswordToken($user, "firewall", ["ROLE_USER"], $user->getRoles());
                     $this->container->get('security.token_storage')->setToken($token);
-                    return $this->redirectToRoute('app_index');
+                    return $this->redirectToRoute('app_atelier');
                 }
             }
         }

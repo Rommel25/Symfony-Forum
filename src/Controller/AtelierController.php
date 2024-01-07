@@ -22,5 +22,17 @@ class AtelierController extends AbstractController
             'ateliers' => $ateliers,
         ]);
     }
+
+    #[Route('/atelier/{id}', name: 'app_atelier_id')]
+    public function oneAtelier(AtelierRepository $atelierRepository, Atelier $atelier): Response
+    {
+        // Fetch all ateliers from the repository
+//        $ateliers = $atelierRepository->findAll();
+
+        return $this->render('atelier/oneAtelier.html.twig', [
+            'atelier' => $atelier,
+        ]);
+    }
+
 }
 
