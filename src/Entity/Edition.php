@@ -30,9 +30,12 @@ class Edition
     #[ORM\OneToMany(mappedBy: 'edition_id', targetEntity: IntervenantEdition::class)]
     private Collection $intervenantEditions;
 
+    #[ORM\ManyToMany(targetEntity: Lyceen::class, mappedBy: 'edition')]
+    private Collection $lyceens;
+
     public function __toString(): string
     {
-        return $this->id + $this->annee;
+        return $this->id . $this->annee;
     }
 
     public function __construct()
@@ -40,6 +43,7 @@ class Edition
         $this->ateliers = new ArrayCollection();
         $this->questionnaires = new ArrayCollection();
         $this->intervenantEditions = new ArrayCollection();
+        $this->lyceens = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -150,6 +154,33 @@ class Edition
             if ($intervenantEdition->getEditionId() === $this) {
                 $intervenantEdition->setEditionId(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Lyceen>
+     */
+    public function getLyceens(): Collection
+    {
+        return $this->lyceens;
+    }
+
+    public function addLyceen(Lyceen $lyceen): static
+    {
+        if (!$this->lyceens->contains($lyceen)) {
+            $this->lyceens->add($lyceen);
+            $lyceen->addEdition($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLyceen(Lyceen $lyceen): static
+    {
+        if ($this->lyceens->removeElement($lyceen)) {
+            $lyceen->removeEdition($this);
         }
 
         return $this;

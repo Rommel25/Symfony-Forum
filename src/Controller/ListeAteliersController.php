@@ -16,7 +16,6 @@ class ListeAteliersController extends AbstractController
     {
         $userrepo = $this->entityManager->getRepository(Atelier::class);
         $Atelier = $userrepo->findAll();
-        dd($Atelier);
         return $this->render('liste_ateliers/index.html.twig', [
             'controller_name' => 'ListeAteliersController',
         ]);
