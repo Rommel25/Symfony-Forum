@@ -26,10 +26,14 @@ class Lyceen
     #[ORM\ManyToMany(targetEntity: Atelier::class, inversedBy: 'lyceens')]
     private Collection $ateliers;
 
+    #[ORM\OneToMany(mappedBy: 'lyceen', targetEntity: Reponse::class)]
+    private Collection $reponses;
+
     public function __construct()
     {
         $this->ateliers = new ArrayCollection();
         $this->edition = new ArrayCollection();
+        $this->reponses = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -87,6 +91,36 @@ class Lyceen
     public function removeAtelier(Atelier $atelier): static
     {
         $this->ateliers->removeElement($atelier);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reponse>
+     */
+    public function getReponses(): Collection
+    {
+        return $this->reponses;
+    }
+
+    public function addReponse(Reponse $reponse): static
+    {
+        if (!$this->reponses->contains($reponse)) {
+            $this->reponses->add($reponse);
+            $reponse->setLyceen($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponse(Reponse $reponse): static
+    {
+        if ($this->reponses->removeElement($reponse)) {
+            // set the owning side to null (unless already changed)
+            if ($reponse->getLyceen() === $this) {
+                $reponse->setLyceen(null);
+            }
+        }
 
         return $this;
     }
