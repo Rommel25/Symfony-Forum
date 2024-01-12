@@ -33,7 +33,7 @@
                             {{ "Nom Lycée:" }}
                         </div>
                         <p class="text-info card-text">
-                            {{ user.lycee }}
+                            {{ lyceen.lycee }}
                         </p>
                     </div>
                 </div>
@@ -49,19 +49,10 @@
                         </p>
                     </div>
                 </div>
-                <div class="col-6 card">
-                    <div class="card-body">
-                        <div class="date card-title">
-                            {{ "Date:" }}
-                        </div>
-                        <p class="text-info card-text">
-                            {{ date|date('Y-m-d H:i:s') }}
-                        </p>
-                    </div>
-                </div>
-                {% for atelier in user.ateliers %}
-                {{ atelier.id }}
-                {% endfor %}
+
+{#                {% for atelier in user.ateliers %}#}
+{#                {{ atelier.id }}#}
+{#                {% endfor %}#}
             </div>
         </div>
     </div>

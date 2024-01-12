@@ -19,7 +19,9 @@ class Questionnaire
     private Collection $edition;
 
     #[ORM\ManyToMany(targetEntity: Question::class, inversedBy: 'questionnaires')]
+    #[ORM\JoinTable(name: 'questionnaire_as_question')]
     private Collection $Question;
+
 
     public function __toString(): string
     {
@@ -84,4 +86,5 @@ class Questionnaire
 
         return $this;
     }
+
 }
