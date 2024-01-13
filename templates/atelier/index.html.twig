@@ -9,22 +9,21 @@
         {% for atelier in ateliers %}
             <div class="accordion-item">
                 <h2 class="accordion-header">
-{#                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ atelier.id }}" aria-expanded="false" aria-controls="collapse{{ atelier.id }}">#}
-                    <button class="accordion-button" type="button">
-                        <a href="{{ path('app_atelier_id', {'id': atelier.id}) }}">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ atelier.id }}" aria-expanded="false" aria-controls="collapse{{ atelier.id }}">
                         Atelier n° {{ atelier.id }}
-                        </a>
                     </button>
                 </h2>
-                
-                <!-- Add the "Register" button here -->
-                <div class="accordion-body">
-                    Nom de l'atelier :<strong> {{ atelier.nom }}.</strong><br>
-                    Nom de la salle :<strong> {{ atelier.salle }}</strong><br>
-                    Nom du secteur :<strong> {{ atelier.secteur }}</strong><br>
-                    
-                    <!-- Register button with a data attribute to store atelier ID -->
-                    <button class="btn btn-primary register-button" data-atelier-id="{{ atelier.id }}">S'inscrire a cet atelier</button>
+                <div id="collapse{{ atelier.id }}" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                    <div class="accordion-body">
+                        Nom de l'atelier :<strong> {{ atelier.nom }}.</strong><br>
+                        Nom de la salle :<strong> {{ atelier.salle }}</strong><br>
+                        Nom du secteur :<strong> {{ atelier.secteur }}</strong><br>
+                    </div>
+                    {% if app.user %}
+                        <a href="{{ path('inscription_atelier', {'id': atelier.id}) }}" class="btn btn-primary register-button">S'inscrire à cet atelier</a>
+                    {% else %}
+                        <p>Connectez-vous pour vous inscrire à cet atelier</p>
+                    {% endif %}
                 </div>
             </div>
         {% endfor %}

@@ -34,5 +34,19 @@ class AtelierController extends AbstractController
         ]);
     }
 
+    #[Route('/inscription-atelier/{id}', name: 'inscription_atelier')]
+    public function inscriptionAtelier(Request $request, Atelier $atelier): Response
+    {
+        $lyceen = $this->getUser();
+
+        $atelier->addLyceen($lyceen);
+
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->persist($atelier);
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('app_atelier');
+    }
+
 }
 
