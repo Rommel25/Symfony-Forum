@@ -41,7 +41,7 @@ class SecurityController extends AbstractController
             $user = $userrepo->findOneBy(["email" => $mail]);
 //                        dd($formData->getPassword(), $user->getPassword());
             if ($formData->getPassword() == $user->getPassword()) {
-//                dd('test');
+//                dd($user->getRoles());
                 if ($user->getRoles() == ['ROLE_ADMIN']) {
 
                     $token = new UsernamePasswordToken($user, "firewall", ["ROLE_ADMIN"], $user->getRoles());

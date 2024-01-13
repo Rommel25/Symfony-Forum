@@ -5,6 +5,8 @@
 namespace App\Controller;
 
 use App\Entity\Atelier;
+use App\Repository\LyceenRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\AtelierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AtelierController extends AbstractController
 {
+    public function __construct(private EntityManagerInterface $entityManager)
+    {
+    }
+
+
     #[Route('/atelier', name: 'app_atelier')]
     public function index(AtelierRepository $atelierRepository): Response
     {
@@ -36,15 +43,24 @@ class AtelierController extends AbstractController
     }
 
     #[Route('/inscription-atelier/{id}', name: 'inscription_atelier')]
-    public function inscriptionAtelier(Request $request, Atelier $atelier): Response
+    public function inscriptionAtelier(Request $request, Atelier $atelier, LyceenRepository $lyceenRepository): Response
     {
-        $lyceen = $this->getUser();
-
+        $user = $this->getUser();
+        $lyceen = $lyceenRepository->findOneBy(['user'=>$user]);
+//        dd($lyceen);
+    if($lyceen->getAteliers()->count() < 3){
         $atelier->addLyceen($lyceen);
+        $lyceen->addAtelier($atelier);
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($atelier);
-        $entityManager->flush();
+//        $entityManager = $this->getDoctrine()->getManager();
+        $this->entityManager->persist($atelier);
+        $this->entityManager->persist($lyceen);
+        $this->entityManager->flush();
+    }
+    else{
+        return $this->redirectToRoute('app_profile');
+    }
+
 
         return $this->redirectToRoute('app_atelier');
     }
