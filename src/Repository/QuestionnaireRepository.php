@@ -21,6 +21,18 @@ class QuestionnaireRepository extends ServiceEntityRepository
         parent::__construct($registry, Questionnaire::class);
     }
 
+    /**
+     * @return Questionnaire|null
+     */
+    public function findLast(): ?Questionnaire
+    {
+        return $this->createQueryBuilder('q')
+            ->orderBy('q.id', 'ASC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
 //    /**
 //     * @return Questionnaire[] Returns an array of Questionnaire objects
 //     */

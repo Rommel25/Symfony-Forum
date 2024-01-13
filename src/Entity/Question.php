@@ -18,19 +18,22 @@ class Question
     #[ORM\Column(length: 255)]
     private ?string $question = null;
 
-    #[ORM\Column(length: 2000)]
-    private ?string $reponse = null;
+
+    #[ORM\OneToMany(mappedBy: 'questions', targetEntity: Reponse::class, cascade: ['persist', 'remove'])]
+    private Collection $reponses;
 
     #[ORM\ManyToMany(targetEntity: Questionnaire::class, mappedBy: 'Question')]
     private Collection $questionnaires;
 
+
     public function __toString(): string
     {
-        return $this->id;
+        return $this->question;
     }
 
     public function __construct()
     {
+        $this->reponses = new ArrayCollection();
         $this->questionnaires = new ArrayCollection();
     }
 
@@ -51,14 +54,32 @@ class Question
         return $this;
     }
 
-    public function getReponse(): ?string
+    /**
+     * @return Collection<int, Reponse>
+     */
+    public function getReponses(): Collection
     {
-        return $this->reponse;
+        return $this->reponses;
     }
 
-    public function setReponse(string $reponse): static
+    public function addReponse(Reponse $reponse): static
     {
-        $this->reponse = $reponse;
+        if (!$this->reponses->contains($reponse)) {
+            $this->reponses->add($reponse);
+            $reponse->setQuestions($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReponse(Reponse $reponse): static
+    {
+        if ($this->reponses->removeElement($reponse)) {
+            // set the owning side to null (unless already changed)
+            if ($reponse->getQuestions() === $this) {
+                $reponse->setQuestions(null);
+            }
+        }
 
         return $this;
     }
@@ -89,4 +110,6 @@ class Question
 
         return $this;
     }
+
+
 }
