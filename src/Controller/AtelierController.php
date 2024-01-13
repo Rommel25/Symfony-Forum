@@ -5,6 +5,7 @@
 namespace App\Controller;
 
 use App\Entity\Atelier;
+use Symfony\Component\HttpFoundation\Request;
 use App\Repository\AtelierRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -44,7 +45,7 @@ class AtelierController extends AbstractController
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->persist($atelier);
         $entityManager->flush();
-        
+
         return $this->redirectToRoute('app_atelier');
     }
 
