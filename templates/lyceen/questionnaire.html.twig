@@ -4,11 +4,16 @@
 
 {% block body %}
 
-    <div class="my-4">
-    {{ form_start(form) }}
-        {{ form_widget(form) }}
-    <button type="submit" class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Valider mes réponses</button>
-    {{ form_end(form) }}
+    <div id="survey" class="container d-flex align-items-center justify-content-center">
+        <div class="card text-center">
+            <div class="card-body">
+                <h1 class="h3 font-weight-normal">Please Answer</h1>
+                {{ form_start(form) }}
+                    {{ form_widget(form) }}
+                <button type="submit" class="inline-flex items-center rounded-md border border-transparent bg-indigo-600 px-3 py-2 text-sm font-medium leading-4 text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Valider mes réponses</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
     </div>
 
 {% endblock %}

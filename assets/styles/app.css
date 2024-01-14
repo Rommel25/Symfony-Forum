@@ -141,3 +141,9 @@ form button:hover {
   align-items: center;
   margin-right: auto;
 }
+
+/* SURVEY */
+
+#survey {
+  height: 100vh;
+}
