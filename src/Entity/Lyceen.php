@@ -2,11 +2,13 @@
 
 namespace App\Entity;
 
+use App\Enum\SectionEnum;
 use App\Repository\LyceenRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 #[ORM\Entity(repositoryClass: LyceenRepository::class)]
 class Lyceen
@@ -19,6 +21,8 @@ class Lyceen
     #[ORM\ManyToOne(inversedBy: 'lyceen')]
     private ?Lycee $Lycee = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $section = SectionEnum::SECOND;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $user = null;
@@ -70,6 +74,29 @@ class Lyceen
 
         return $this;
     }
+
+    public function getDegreeValue()
+    {
+        return SectionEnum::getDegree($this->section);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getSection(): ?string
+    {
+        return $this->section;
+    }
+
+    /**
+     * @param string|null $section
+     */
+    public function setSection(?string $section): void
+    {
+        $this->section = $section;
+    }
+
+
 
     /**
      * @return Collection<int, Atelier>

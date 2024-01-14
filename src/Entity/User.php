@@ -42,6 +42,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?bool $hashed = false;
 
+    #[ORM\ManyToOne(inversedBy: 'userAdmin')]
+    private ?Lycee $lycee = null;
+
 
 
     public function __toString(): string
@@ -165,6 +168,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setHashed(bool $hashed): static
     {
         $this->hashed = $hashed;
+
+        return $this;
+    }
+
+    public function getLycee(): ?Lycee
+    {
+        return $this->lycee;
+    }
+
+    public function setLycee(?Lycee $lycee): static
+    {
+        $this->lycee = $lycee;
 
         return $this;
     }

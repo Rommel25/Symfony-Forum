@@ -27,6 +27,9 @@ class Salle
     #[ORM\OneToMany(mappedBy: 'salle', targetEntity: Atelier::class)]
     private Collection $ateliers;
 
+    #[ORM\Column]
+    private ?int $cappacite = null;
+
     public function __toString(): string
     {
         // return $this->nom + $this->etage;
@@ -37,6 +40,7 @@ class Salle
     public function __construct()
     {
         $this->ateliers = new ArrayCollection();
+        $this->cappacite = $this->capacite_max;
     }
 
     public function getId(): ?int
@@ -106,6 +110,18 @@ class Salle
                 $atelier->setSalle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCappacite(): ?int
+    {
+        return $this->cappacite;
+    }
+
+    public function setCappacite(int $cappacite): static
+    {
+        $this->cappacite = $cappacite;
 
         return $this;
     }
