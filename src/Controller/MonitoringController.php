@@ -16,7 +16,7 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class MonitoringController extends AbstractController
 {
     #[Route('/monitoring/lycee', name: 'app_monitoring_lycee')]
-    #[IsGranted('ROLE_LYCEE')]
+//    #[IsGranted('ROLE_LYCEE')]
     public function index(Security $security, LyceeRepository $lyceeRepository, UserRepository $userRepository, SponsorRepository $sponsorRepository): Response
     {
         $user = $userRepository->findOneBy(['id'=>$security->getUser()->getId()]);
@@ -30,7 +30,7 @@ class MonitoringController extends AbstractController
 
         ]);
     }
-    #[Route('/monitoring/atelier/{id}', name: 'app_monitoring_lycee')]
+    #[Route('/monitoring/atelier/{id}', name: 'app_monitoring_atelier')]
     #[IsGranted('ROLE_ADMIN')]
     public function ateliersMonitoring(Atelier $atelier): Response {
 
