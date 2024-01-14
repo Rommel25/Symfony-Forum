@@ -60,6 +60,11 @@ form button:hover {
   margin-bottom: 1.5rem;
 }
 
+.accordion {
+  max-width: 900px;
+  margin: auto;
+}
+
 .accordion .accordion-item .btn_one {
   margin-left: 1rem;
   margin-bottom: 1rem;
@@ -68,6 +73,8 @@ form button:hover {
 .accordion .accordion-button {
   background-color: bisque !important;
   border-color: #b69574;
+  font-weight: 600;
+  color: black !important;
 }
 
 .accordion .accordion-item {
