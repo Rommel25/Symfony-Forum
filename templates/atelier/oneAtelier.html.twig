@@ -24,7 +24,7 @@
 
                 <!-- Register button with a data attribute to store atelier ID -->
                 {% if app.user and 'ROLE_USER' in app.user.getRoles() and app.user.getRoles()|length == 1 %}
-                    <a href="{{ path('inscription_atelier', {'id': atelier.id}) }}" class="btn btn-primary register-button">S'inscrire à cet atelier</a>
+                    <a href="{{ path('inscription_atelier', {'id': atelier.id}) }}" class="btn btn_one register-button">S'inscrire à cet atelier</a>
                 {% elseif not app.user %}
                     <p>Connectez-vous pour vous inscrire à cet atelier</p>
                 {% endif %}
