@@ -55,7 +55,7 @@ class SecurityController extends AbstractController
                 $token = new UsernamePasswordToken($user, 'firewall' , $roles);
 
                 $this->container->get('security.token_storage')->setToken($token);
-                return $this->redirectToRoute('app_index');
+                return $this->redirectToRoute('app_atelier');
             }
         }
         // render login form
