@@ -212,3 +212,16 @@ form button:hover {
   margin-top: 1rem;
   margin-left: 0;
 }
+
+/* PROFILE */
+
+.list-group-item {
+  display: flex !important;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.list-group-item .part {
+  display: flex;
+  flex-direction: column;
+}
