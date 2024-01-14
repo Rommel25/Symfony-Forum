@@ -32,10 +32,11 @@ class MonitoringController extends AbstractController
     }
     #[Route('/monitoring/atelier/{id}', name: 'app_monitoring_atelier')]
     #[IsGranted('ROLE_ADMIN')]
-    public function ateliersMonitoring(Atelier $atelier): Response {
+    public function ateliersMonitoring(Atelier $atelier,SponsorRepository $sponsorRepository): Response {
 
         return $this->render('monitoring/atelier.html.twig', [
             'atelier' => $atelier,
+            'sponsor' => $sponsorRepository->findLast()
         ]);
     }
 
