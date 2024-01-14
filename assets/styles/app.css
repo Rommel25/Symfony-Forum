@@ -2,13 +2,48 @@ body {
   background-color: skyblue;
 }
 
+/* REGISTRATION */
+
+#registration.container {
+  height: 100vh;
+}
+
+#registration form {
+  max-width: 450px;
+}
+
+#registration #lyceen_user input[type="text"] {
+  margin-bottom: 1rem;
+}
+
+#registration #lyceen_user div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  width: 50%;
+  float: left;
+}
+
+#registration #lyceen_user label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-right: auto;
+  padding-left: 12px;
+}
+
+/* LOGIN */
+
 #login.container {
   height: 100vh;
 }
+
 #login #login_submit {
   border-radius: 15px;
   background-color: aliceblue;
 }
+
 #login #login_submit:hover {
   background-color: red;
 }
