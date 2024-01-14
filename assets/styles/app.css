@@ -2,6 +2,16 @@ body {
   background-color: skyblue;
 }
 
+/* GLOBAL */
+
+form label {
+  font-weight: 600;
+}
+
+.card-body h1 {
+  margin-bottom: 1.5rem;
+}
+
 /* REGISTRATION */
 
 #registration.container {
@@ -31,6 +41,16 @@ body {
   align-items: center;
   margin-right: auto;
   padding-left: 12px;
+}
+
+#registration #lyceen button {
+  margin-top: 3rem;
+  margin-left: -13rem;
+}
+
+#registration #lyceen select {
+  margin-top: 27px;
+  margin-left: 15px;
 }
 
 /* LOGIN */
