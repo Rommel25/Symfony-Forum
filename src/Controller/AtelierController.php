@@ -22,7 +22,7 @@ class AtelierController extends AbstractController
     }
 
 
-    #[Route('/atelier', name: 'app_atelier')]
+    #[Route('/', name: 'app_atelier')]
     public function index(AtelierRepository $atelierRepository): Response
     {
         // Fetch all ateliers from the repository
