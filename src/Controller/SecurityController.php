@@ -41,7 +41,8 @@ class SecurityController extends AbstractController
             $mail = $formData->getEmail();
             $user = $userrepo->findOneBy(["email" => $mail]);
             if ($formData->getPassword() == $user->getPassword()) {
-                $roles = [];
+//                dd($user->getRoles());
+                if ($user->getRoles() == ['ROLE_ADMIN']) {
 
                 if (in_array('ROLE_ADMIN', $user->getRoles())) {
                     $roles[] = 'ROLE_ADMIN';

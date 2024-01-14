@@ -5,6 +5,9 @@
 namespace App\Controller;
 
 use App\Entity\Atelier;
+use App\Repository\LyceenRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use App\Repository\AtelierRepository;
 use App\Repository\LyceenRepository;
 use App\Repository\SponsorRepository;
@@ -18,7 +21,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class AtelierController extends AbstractController
 {
-    public function __construct(private EntityManagerInterface $entityManager, private SponsorRepository $sponsorRepository)
+    public function __construct(private EntityManagerInterface $entityManager)
     {
     }
 
@@ -49,19 +52,24 @@ class AtelierController extends AbstractController
     }
 
     #[Route('/inscription-atelier/{id}', name: 'inscription_atelier')]
-    public function inscriptionAtelier(Request $request, Atelier $atelier, LyceenRepository $lyceenRepository, SessionInterface $session): Response
+    public function inscriptionAtelier(Request $request, Atelier $atelier, LyceenRepository $lyceenRepository): Response
     {
         $user = $this->getUser();
         $lyceen = $lyceenRepository->findOneBy(['user'=>$user]);
 //        dd($lyceen);
-        if($lyceen->getAteliers()->count() < 3){
-            $atelier->addLyceen($lyceen);
-            $lyceen->addAtelier($atelier);
+    if($lyceen->getAteliers()->count() < 3){
+        $atelier->addLyceen($lyceen);
+        $lyceen->addAtelier($atelier);
 
 //        $entityManager = $this->getDoctrine()->getManager();
-            $this->entityManager->persist($atelier);
-            $this->entityManager->persist($lyceen);
-            $this->entityManager->flush();
+        $this->entityManager->persist($atelier);
+        $this->entityManager->persist($lyceen);
+        $this->entityManager->flush();
+    }
+    else{
+        return $this->redirectToRoute('app_profile');
+    }
+
 
             $session->getFlashBag()->add('success', 'L\'atelier a bien été ajouté.');
             return $this->redirectToRoute('app_atelier');
