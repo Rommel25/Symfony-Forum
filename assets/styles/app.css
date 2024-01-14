@@ -147,3 +147,13 @@ form button:hover {
 #survey {
   height: 100vh;
 }
+
+#survey #questionnaire div {
+  display: flex;
+  flex-direction: column;
+}
+
+#survey #questionnaire #questionnaire_reponse8_reponse {
+  display: flex;
+  flex-direction: row;
+}
