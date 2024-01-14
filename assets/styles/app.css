@@ -206,7 +206,7 @@ form button:hover {
   margin: auto;
 }
 
-/* ONEATELIER */
+/* ONE_ATELIER */
 
 #oneAtelier .btn_one {
   margin-top: 1rem;
@@ -215,13 +215,32 @@ form button:hover {
 
 /* PROFILE */
 
-.list-group-item {
+#profile_page .list-group-item {
   display: flex !important;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.list-group-item .part {
+#profile_page .list-group-item .part {
   display: flex;
   flex-direction: column;
+}
+
+/* ATELIER_MONITORING */
+
+#atelier_monitoring {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+#atelier_monitoring .liste {
+  margin-top: 25px;
+}
+
+#atelier_monitoring h5 {
+  font-weight: 700;
+}
+
+#atelier_monitoring .card {
+  margin: auto;
 }
