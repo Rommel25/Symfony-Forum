@@ -23,7 +23,8 @@ form label {
 
 form input[type="text"],
 input[type="password"],
-input[type="email"] {
+input[type="email"],
+input[type="number"] {
   background: #f7f7f787;
   border: 1px solid grey;
   border-radius: 4px;
@@ -151,6 +152,29 @@ form button:hover {
 
 #survey {
   height: 100vh;
+}
+
+#survey input[type="radio"] {
+  margin-right: 4px;
+}
+#survey input[type="radio"] {
+  margin-right: 4px;
+}
+
+#survey input[type="radio"]:last-of-type {
+  margin-left: 6px;
+}
+
+#survey #questionnaire_reponse8_reponse {
+  margin-bottom: 1rem;
+}
+
+#survey form {
+  text-align: left;
+}
+
+#survey .card-body {
+  padding: 1rem 2rem;
 }
 
 #survey #questionnaire div {
