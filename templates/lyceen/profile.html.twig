@@ -14,82 +14,82 @@
     </style>
     
 <div class="bg-light pt-3 pb-3">
-    <div class="example-wrapper">
-        <div class="container">
+    <div class="example-wrapper" id="profile_page">
 
-            <div class="row mb-2">
-                <h1>{{ "Profile:" }}</h1>
-            </div>
-            <div class="row">
-                <div class="col-6 mb-4 card">
-                    <div class="card-body">
-                        <div class="email card-title">
-                            {{ "Adresse Email:" }}
-                        </div>
-                        <p class="text-info card-text">
-                            {{ user.email }}
-                        </p>
+        <div class="row mb-2">
+            <h1>{{ "Profile:" }}</h1>
+        </div>
+        <div class="row">
+            <div class="col-6 mb-4 card">
+                <div class="card-body">
+                    <div class="email card-title">
+                        <strong>{{ "Adresse Email:" }}</strong>
                     </div>
-                </div>
-                <div class="col-6 mb-4 card">
-                    <div class="card-body">
-                        <div class="lycee card-title">
-                            {{ "Nom Lycée:" }}
-                        </div>
-                        <p class="text-info card-text">
-                            {{ lyceen.lycee }}
-                        </p>
-                    </div>
+                    <p class="text-info card-text">
+                        {{ user.email }}
+                    </p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-6 card">
-                    <div class="card-body">
-                        <div class="tel">
-                            {{ "Téléphone:" }}
-                        </div>
-                        <p class="text-info card-text">
-                            {{ user.telephone }}
-                        </p>
+            <div class="col-6 mb-4 card">
+                <div class="card-body">
+                    <div class="lycee card-title">
+                        <strong>{{ "Nom Lycée:" }}</strong>
                     </div>
+                    <p class="text-info card-text">
+                        {{ lyceen.lycee }}
+                    </p>
                 </div>
-
-                <div class="row">
-                    <div class="col-6 card">
-                        <div class="card-body">
-                            <div class="tel">
-                                {{ "Section:" }}
-                            </div>
-                            <p class="text-info card-text">
-                                {{ lyceen.section }}
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-6 card">
-                            <div class="card-body">
-                                <div class="tel">
-                                    {{ "Atelier:" }}
-                                </div>
-                                <p class="text-info card-text">
-                                    {% for atelier in ateliers %}
-                                <li class="list-group-item">
-                                    <strong>Nom:</strong> {{ atelier.nom }}<br>
-                                    <strong>Salle:</strong> {{ atelier.salle }}<br>
-                                    <strong>Secteur:</strong> {{ atelier.secteur }}<br>
-                                    <!-- Ajoutez d'autres propriétés d'atelier si nécessaire -->
-                                </li>
-                                    {% endfor %}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
             </div>
         </div>
+        <div class="row">
+            <div class="col-6 mb-4 card">
+                <div class="card-body">
+                    <div class="tel">
+                        <strong>{{ "Téléphone:" }}</strong>
+                    </div>
+                    <p class="text-info card-text">
+                        {{ user.telephone }}
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-6 mb-4 card">
+                <div class="card-body">
+                    <div class="tel">
+                       <strong>{{ "Section:" }}</strong>
+                    </div>
+                    <p class="text-info card-text">
+                        {{ lyceen.section }}
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 card">
+                <div class="card-body">
+                    <div class="tel">
+                        <strong>{{ "Atelier:" }}</strong>
+                    </div>
+                    <p class="text-info card-text">
+                        {% for atelier in ateliers %}
+                    <li class="list-group-item">
+                        <div class="part">
+                            <strong>Nom:</strong><p class="text-info">{{ atelier.nom }}</p>
+                        </div>
+                        <div class="part">
+                            <strong>Salle:</strong><p class="text-info">{{ atelier.salle }}</p>
+                        </div>
+                        <div class="part">
+                            <strong>Secteur:</strong><p class="text-info">{{ atelier.secteur }}</p>
+                        </div>
+                        <!-- Ajoutez d'autres propriétés d'atelier si nécessaire -->
+                    </li>
+                        {% endfor %}
+                    </p>
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
 {% endblock %}
