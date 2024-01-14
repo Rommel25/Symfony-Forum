@@ -39,8 +39,39 @@ form button:hover {
   color: white;
 }
 
+.btn_one {
+  border-radius: 24px;
+  border-color: transparent;
+  background-color: #d1aa82;
+  padding: 8px 20px;
+  transition: 0.3s ease;
+  color: black;
+  text-decoration: none;
+  display: block;
+  width: fit-content;
+}
+
+.btn_one:hover {
+  background-color: #b69574;
+  color: white;
+}
+
 .card-body h1 {
   margin-bottom: 1.5rem;
+}
+
+.accordion .accordion-item .btn_one {
+  margin-left: 1rem;
+  margin-bottom: 1rem;
+}
+
+.accordion .accordion-button {
+  background-color: bisque !important;
+  border-color: #b69574;
+}
+
+.accordion .accordion-item {
+  border-color: #b69574;
 }
 
 /* REGISTRATION */

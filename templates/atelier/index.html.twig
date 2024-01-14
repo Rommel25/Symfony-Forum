@@ -28,7 +28,7 @@
             Nom de la salle :<strong> {{ atelier.salle }}</strong><br>
             Nom du secteur :<strong> {{ atelier.secteur }}</strong><br>
           </div>
-          <a href="{{ path('app_atelier_id', {'id': atelier.id}) }}" class="btn btn-primary">Voir en détails l'atelier {{ atelier.nom }}</a>
+          <a href="{{ path('app_atelier_id', {'id': atelier.id}) }}" class="btn_one">Voir en détails l'atelier {{ atelier.nom }}</a>
         </div>
       </div>
     {% endfor %}
