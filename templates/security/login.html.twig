@@ -13,9 +13,10 @@
                     {{ form_start(form) }}
                     {{ form_widget(form) }}
                     {{ form_end(form) }}
-                </div>
+                </div> 
+                No account yet ? <a href="{{ path('app_register') }}">Sign up</a>
             </div>
-    {#        <button class="btn btn-lg btn-primary" type="submit">Sign in</button>#}
+           
         </form>
     </div>
 {% endblock %}

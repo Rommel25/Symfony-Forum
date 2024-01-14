@@ -10,9 +10,20 @@
   {% for flashMessage in app.flashes('error') %}
     <div class="alert alert-danger">{{ flashMessage }}</div>
   {% endfor %}
-{#  <h3>L'évenement est sponsorisé par : {{ sponsor.nom }}</h3>#}
 
-  <h3 class="sub_title">Ateliers</h3>
+  {% if app.user %}
+        {% else %}
+          <div style="float: right;">
+            <a href="{{ path('app_login') }}" class="btn btn_one register-button">Login</a>
+            <a href="{{ path('app_register') }}" class="btn btn_one register-button">Register</a>
+          </div>
+  {% endif %}
+
+  <br>
+  <br><h2 class="principal_title">Bienvenue sur notre forum !</h2>
+  <br>
+  <br> 
+  <h3 class="sub_title">Les ateliers à venir </h3>
   <br>
   <div class="accordion" id="accordionExample">
     {% for atelier in ateliers %}
