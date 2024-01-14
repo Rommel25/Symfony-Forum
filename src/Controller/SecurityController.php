@@ -40,7 +40,7 @@ class SecurityController extends AbstractController
             $formData = $form->getData();
             $mail = $formData->getEmail();
             $user = $userrepo->findOneBy(["email" => $mail]);
-            if ($formData->getPassword() == $user->getPassword()) {
+            if (md5($formData->getPassword()) == $user->getPassword()) {
                 $roles = [];
 
                 if (in_array('ROLE_ADMIN', $user->getRoles())) {
@@ -81,11 +81,10 @@ class SecurityController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $lyceen->getUser()->setPassword(md5($lyceen->getUser()->getPassword()));
+            $lyceen->getUser()->setPassword($lyceen->getUser()->getPassword());
             $lyceen->getUser()->setRoles(["ROLE_USER"]);
             $this->entityManager->persist($lyceen);
             $this->entityManager->flush();
-
             return $this->redirectToRoute('app_login');
         }
 

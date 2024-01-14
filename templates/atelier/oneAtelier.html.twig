@@ -23,11 +23,12 @@
                 Nom du secteur :<strong> {{ atelier.secteur }}</strong><br>
 
                 <!-- Register button with a data attribute to store atelier ID -->
-                {% if app.user %}
+                {% if app.user and 'ROLE_USER' in app.user.getRoles() and app.user.getRoles()|length == 1 %}
                     <a href="{{ path('inscription_atelier', {'id': atelier.id}) }}" class="btn btn-primary register-button">S'inscrire à cet atelier</a>
-                {% else %}
+                {% elseif not app.user %}
                     <p>Connectez-vous pour vous inscrire à cet atelier</p>
                 {% endif %}
+
             </div>
         </div>
     </div>

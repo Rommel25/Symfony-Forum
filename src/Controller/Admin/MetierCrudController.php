@@ -20,6 +20,7 @@ class MetierCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         return [
+            TextField::new('nom'),
             AssociationField::new('activite'),
             AssociationField::new('competence'),
         ];

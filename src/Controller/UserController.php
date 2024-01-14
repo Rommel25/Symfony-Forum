@@ -27,25 +27,27 @@ class UserController extends AbstractController
 {
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager, private LyceenRepository $lyceenRepository,
-    private EncryptDataService $encryptDataService, private SponsorRepository $sponsorRepository)
+    public function __construct(EntityManagerInterface     $entityManager, private LyceenRepository $lyceenRepository,
+                                private EncryptDataService $encryptDataService, private SponsorRepository $sponsorRepository)
     {
         $this->entityManager = $entityManager;
     }
-//Permet de voir le profil de l'utilisateur
-#[Route('/profile', name: 'app_profile', methods: ['GET', 'POST'])]
-#[IsGranted("ROLE_USER")]
-public function profile(Request $request, AuthenticationUtils $authenticationUtils, Security $security): Response
-{   $lyceen = $this->lyceenRepository->findOneBy(['user'=>$security->getUser()]);
-//    dd($lyceen->getAteliers());
-    return $this->render('lyceen/profile.html.twig', [
-        'user' => $security->getUser(),
-        'lyceen' => $lyceen,
-        'ateliers' => $lyceen->getAteliers(),
-        'sponsor' => $this->sponsorRepository->findLast()
 
-    ]);
-}
+//Permet de voir le profil de l'utilisateur
+    #[Route('/profile', name: 'app_profile', methods: ['GET', 'POST'])]
+    #[IsGranted("ROLE_USER")]
+    public function profile(Request $request, AuthenticationUtils $authenticationUtils, Security $security): Response
+    {
+        $lyceen = $this->lyceenRepository->findOneBy(['user' => $security->getUser()]);
+//    dd($lyceen->getAteliers());
+        return $this->render('lyceen/profile.html.twig', [
+            'user' => $security->getUser(),
+            'lyceen' => $lyceen,
+            'ateliers' => $lyceen->getAteliers(),
+            'sponsor' => $this->sponsorRepository->findLast()
+
+        ]);
+    }
 
     #[Route('/questionnaire', name: 'app_questionnaire', methods: ['GET', 'POST'])]
     #[IsGranted("ROLE_USER")]
@@ -56,12 +58,12 @@ public function profile(Request $request, AuthenticationUtils $authenticationUti
             'questionnaire' => $questionnaire
         ]);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            foreach($form->getData() as $reponse){
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($form->getData() as $reponse) {
                 $this->entityManager->persist($reponse);
             };
             $this->entityManager->flush();
-            $lyceen = $this->lyceenRepository->findOneBy(['user'=>$this->getUser()]);
+            $lyceen = $this->lyceenRepository->findOneBy(['user' => $this->getUser()]);
 //            $this->encryptDataService->hashService($lyceen);
             $session->getFlashBag()->add('success', 'Vos réponses ont bien été enregistrés');
             return $this->redirectToRoute('app_profile');
@@ -71,7 +73,6 @@ public function profile(Request $request, AuthenticationUtils $authenticationUti
             'sponsor' => $this->sponsorRepository->findLast()
         ]);
     }
-
 
 
 }

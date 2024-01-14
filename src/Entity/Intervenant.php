@@ -22,7 +22,7 @@ class Intervenant
     #[ORM\OneToMany(mappedBy: 'intervenant_id', targetEntity: IntervenantEdition::class)]
     private Collection $intervenantEditions;
 
-    #[ORM\OneToOne(cascade: ['remove'])]
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
     private ?User $user = null;
 
     #[ORM\ManyToMany(targetEntity: Atelier::class, mappedBy: 'intervenants')]

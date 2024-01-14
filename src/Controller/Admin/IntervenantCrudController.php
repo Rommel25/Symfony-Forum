@@ -25,7 +25,7 @@ class IntervenantCrudController extends AbstractCrudController
         return [
             AssociationField::new('user')->renderAsEmbeddedForm(),
             TextField::new('entreprise'),
-            AssociationField::new('atelier')
+            AssociationField::new('ateliers')
             ];
     }
 
