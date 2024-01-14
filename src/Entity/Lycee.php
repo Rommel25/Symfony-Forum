@@ -21,6 +21,9 @@ class Lycee
     #[ORM\OneToMany(mappedBy: 'Lycee', targetEntity: Lyceen::class)]
     private Collection $lyceen;
 
+    #[ORM\OneToMany(mappedBy: 'lycee', targetEntity: User::class)]
+    private Collection $userAdmin;
+
     public function __toString(): string
     {
         return $this->id . ' ' . $this->nom;
@@ -29,6 +32,7 @@ class Lycee
     public function __construct()
     {
         $this->lyceen = new ArrayCollection();
+        $this->userAdmin = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -72,6 +76,36 @@ class Lycee
             // set the owning side to null (unless already changed)
             if ($atelier->getLycee() === $this) {
                 $atelier->setLycee(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUserAdmin(): Collection
+    {
+        return $this->userAdmin;
+    }
+
+    public function addUserAdmin(User $userAdmin): static
+    {
+        if (!$this->userAdmin->contains($userAdmin)) {
+            $this->userAdmin->add($userAdmin);
+            $userAdmin->setLycee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserAdmin(User $userAdmin): static
+    {
+        if ($this->userAdmin->removeElement($userAdmin)) {
+            // set the owning side to null (unless already changed)
+            if ($userAdmin->getLycee() === $this) {
+                $userAdmin->setLycee(null);
             }
         }
 

@@ -18,8 +18,6 @@ class Intervenant
     #[ORM\Column(length: 255)]
     private ?string $entreprise = null;
 
-    #[ORM\ManyToOne(inversedBy: 'intervenants')]
-    private ?Atelier $atelier = null;
 
     #[ORM\OneToMany(mappedBy: 'intervenant_id', targetEntity: IntervenantEdition::class)]
     private Collection $intervenantEditions;
@@ -27,9 +25,13 @@ class Intervenant
     #[ORM\OneToOne(cascade: ['remove'])]
     private ?User $user = null;
 
+    #[ORM\ManyToMany(targetEntity: Atelier::class, mappedBy: 'intervenants')]
+    private Collection $ateliers;
+
     public function __construct()
     {
         $this->intervenantEditions = new ArrayCollection();
+        $this->ateliers = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -55,17 +57,6 @@ class Intervenant
         return $this;
     }
 
-    public function getAtelier(): ?Atelier
-    {
-        return $this->atelier;
-    }
-
-    public function setAtelier(?Atelier $atelier): static
-    {
-        $this->atelier = $atelier;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, IntervenantEdition>
@@ -105,6 +96,33 @@ class Intervenant
     public function setUser(?User $user): static
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Atelier>
+     */
+    public function getAteliers(): Collection
+    {
+        return $this->ateliers;
+    }
+
+    public function addAtelier(Atelier $atelier): static
+    {
+        if (!$this->ateliers->contains($atelier)) {
+            $this->ateliers->add($atelier);
+            $atelier->addIntervenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAtelier(Atelier $atelier): static
+    {
+        if ($this->ateliers->removeElement($atelier)) {
+            $atelier->removeIntervenant($this);
+        }
 
         return $this;
     }

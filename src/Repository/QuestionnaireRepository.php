@@ -27,7 +27,7 @@ class QuestionnaireRepository extends ServiceEntityRepository
     public function findLast(): ?Questionnaire
     {
         return $this->createQueryBuilder('q')
-            ->orderBy('q.id', 'ASC')
+            ->orderBy('q.id', 'DESC')
             ->setMaxResults(1)
             ->getQuery()
             ->getOneOrNullResult();

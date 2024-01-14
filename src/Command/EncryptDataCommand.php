@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Service\EncryptDataService;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -22,7 +23,8 @@ class EncryptDataCommand extends Command
 {
     public function __construct(
         private LyceenRepository $lyceenRepository,
-        private EntityManagerInterface $em
+        private EntityManagerInterface $em,
+        private EncryptDataService $encryptDataService
     )
     {
 
@@ -44,11 +46,7 @@ class EncryptDataCommand extends Command
 
         foreach ($students as $student) {
             if (!$student->getUser()->isHashed()) {
-                $student->getUser()->setEmail(md5($student->getUser()->getEmail()));
-                $student->getUser()->setNom(md5($student->getUser()->getNom()));
-                $student->getUser()->setPrenom(md5($student->getUser()->getPrenom()));
-                $student->getUser()->setTelephone(md5($student->getUser()->getTelephone()));
-                $student->getUser()->setHashed(true);
+                $this->encryptDataService->hashService($student);
             }
         }
 

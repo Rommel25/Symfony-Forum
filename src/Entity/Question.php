@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Enum\TypeQuestionEnum;
 use App\Repository\QuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,6 +19,8 @@ class Question
     #[ORM\Column(length: 255)]
     private ?string $question = null;
 
+    #[ORM\Column(length: 50)]
+    private ?string $type = TypeQuestionEnum::OPEN;
 
     #[ORM\OneToMany(mappedBy: 'questions', targetEntity: Reponse::class, cascade: ['persist', 'remove'])]
     private Collection $reponses;
@@ -53,6 +56,30 @@ class Question
 
         return $this;
     }
+
+    public function getTypeValue()
+    {
+        return TypeQuestionEnum::getType($this->type);
+    }
+
+
+    /**
+     * @return string|null
+     */
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    /**
+     * @param string|null $type
+     */
+    public function setType(?string $type): void
+    {
+        $this->type = $type;
+    }
+
+
 
     /**
      * @return Collection<int, Reponse>

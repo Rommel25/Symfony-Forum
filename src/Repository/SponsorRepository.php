@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Questionnaire;
 use App\Entity\Sponsor;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,6 +20,15 @@ class SponsorRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Sponsor::class);
+    }
+
+    public function findLast(): ?Sponsor
+    {
+        return $this->createQueryBuilder('q')
+            ->orderBy('q.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**

@@ -7,6 +7,7 @@ use App\Entity\User;
 use App\Form\LoginType;
 use App\Form\LyceenType;
 use App\Form\RegisterType;
+use App\Repository\SponsorRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,7 +24,7 @@ class SecurityController extends AbstractController
     private $entityManager;
 
     // Injection de dépendance par le constructeur
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, private SponsorRepository $sponsorRepository)
     {
         $this->entityManager = $entityManager;
     }
@@ -39,28 +40,28 @@ class SecurityController extends AbstractController
             $formData = $form->getData();
             $mail = $formData->getEmail();
             $user = $userrepo->findOneBy(["email" => $mail]);
-//                        dd($formData->getPassword(), $user->getPassword());
             if ($formData->getPassword() == $user->getPassword()) {
-//                dd('test');
-                if ($user->getRoles() == ['ROLE_ADMIN']) {
+                $roles = [];
 
-                    $token = new UsernamePasswordToken($user, "firewall", ["ROLE_ADMIN"], $user->getRoles());
-                    $this->container->get('security.token_storage')->setToken($token);
-                    return $this->redirectToRoute('admin', [$user]);
-                } elseif ($user->getRoles() == ['ROLE_LYCEE']) {
-                    $token = new UsernamePasswordToken($user, "firewall", ["ROLE_LYCEE"], $user->getRoles());
-                    $this->container->get('security.token_storage')->setToken($token);
-                    return $this->redirectToRoute('app_index');
-                } else {
-                    $token = new UsernamePasswordToken($user, "firewall", ["ROLE_USER"], $user->getRoles());
-                    $this->container->get('security.token_storage')->setToken($token);
-                    return $this->redirectToRoute('app_index');
+                if (in_array('ROLE_ADMIN', $user->getRoles())) {
+                    $roles[] = 'ROLE_ADMIN';
                 }
+
+                if (in_array('ROLE_LYCEE', $user->getRoles())) {
+                    $roles[] = 'ROLE_LYCEE';
+                }
+                $roles[] = 'ROLE_USER';
+
+                $token = new UsernamePasswordToken($user, 'firewall' , $roles);
+
+                $this->container->get('security.token_storage')->setToken($token);
+                return $this->redirectToRoute('app_index');
             }
         }
         // render login form
         return $this->render('security/login.html.twig', [
             'form' => $form->createView(),
+            'sponsor' => $this->sponsorRepository->findLast()
         ]);
     }
 
@@ -90,6 +91,7 @@ class SecurityController extends AbstractController
 
         return $this->render('security/registration.html.twig', [
             'form' => $form->createView(),
+            'sponsor' => $this->sponsorRepository->findLast()
         ]);
     }
 }
