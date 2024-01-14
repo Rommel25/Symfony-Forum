@@ -5,14 +5,24 @@
 namespace App\Controller;
 
 use App\Entity\Atelier;
-use Symfony\Component\HttpFoundation\Request;
 use App\Repository\AtelierRepository;
+use App\Repository\LyceenRepository;
+use App\Repository\SponsorRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
 
 class AtelierController extends AbstractController
 {
+    public function __construct(private EntityManagerInterface $entityManager, private SponsorRepository $sponsorRepository)
+    {
+    }
+
+
     #[Route('/atelier', name: 'app_atelier')]
     public function index(AtelierRepository $atelierRepository): Response
     {
@@ -21,6 +31,7 @@ class AtelierController extends AbstractController
 
         return $this->render('atelier/index.html.twig', [
             'ateliers' => $ateliers,
+            'sponsor' => $this->sponsorRepository->findLast()
         ]);
     }
 
@@ -32,22 +43,33 @@ class AtelierController extends AbstractController
 
         return $this->render('atelier/oneAtelier.html.twig', [
             'atelier' => $atelier,
+            'sponsor' => $this->sponsorRepository->findLast()
+
         ]);
     }
 
     #[Route('/inscription-atelier/{id}', name: 'inscription_atelier')]
-    public function inscriptionAtelier(Request $request, Atelier $atelier): Response
+    public function inscriptionAtelier(Request $request, Atelier $atelier, LyceenRepository $lyceenRepository, SessionInterface $session): Response
     {
-        $lyceen = $this->getUser();
+        $user = $this->getUser();
+        $lyceen = $lyceenRepository->findOneBy(['user'=>$user]);
+//        dd($lyceen);
+        if($lyceen->getAteliers()->count() < 3){
+            $atelier->addLyceen($lyceen);
+            $lyceen->addAtelier($atelier);
 
-        $atelier->addLyceen($lyceen);
+//        $entityManager = $this->getDoctrine()->getManager();
+            $this->entityManager->persist($atelier);
+            $this->entityManager->persist($lyceen);
+            $this->entityManager->flush();
 
-        $entityManager = $this->getDoctrine()->getManager();
-        $entityManager->persist($atelier);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('app_atelier');
+            $session->getFlashBag()->add('success', 'L\'atelier a bien été ajouté.');
+            return $this->redirectToRoute('app_atelier');
+        }
+        else{
+            $session->getFlashBag()->add('error', 'Vous avez deja 3 ateliers');
+            return $this->redirectToRoute('app_atelier');
+        }
     }
 
 }
-

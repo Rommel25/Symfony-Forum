@@ -23,8 +23,6 @@ class Atelier
     #[ORM\ManyToOne(inversedBy: 'ateliers')]
     private ?Secteur $secteur = null;
 
-    #[ORM\OneToMany(mappedBy: 'atelier', targetEntity: Intervenant::class)]
-    private ?Collection $intervenants;
 
     #[ORM\ManyToOne(inversedBy: 'ateliers')]
     private ?Salle $salle = null;
@@ -44,6 +42,9 @@ class Atelier
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[ORM\ManyToMany(targetEntity: Intervenant::class, inversedBy: 'ateliers')]
+    private Collection $intervenants;
+
     public function __toString(): string
     {
         return $this->nom;
@@ -53,11 +54,11 @@ class Atelier
     public function __construct()
     {
         $this->metier = new ArrayCollection();
-        $this->intervenants = new ArrayCollection();
         $this->edition = new ArrayCollection();
         $this->ressource = new ArrayCollection();
         $this->lyceens = new ArrayCollection();
         $this->forums = new ArrayCollection();
+        $this->intervenants = new ArrayCollection();
     }
 
 //    public function removeMetier(Metier $metier): self
@@ -133,35 +134,7 @@ class Atelier
         return $this;
     }
 
-    /**
-     * @return Collection<int, Intervenant>
-     */
-    public function getIntervenants(): Collection
-    {
-        return $this->intervenants;
-    }
 
-    public function addIntervenant(Intervenant $intervenant): static
-    {
-        if (!$this->intervenants->contains($intervenant)) {
-            $this->intervenants->add($intervenant);
-            $intervenant->setAtelier($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIntervenant(Intervenant $intervenant): static
-    {
-        if ($this->intervenants->removeElement($intervenant)) {
-            // set the owning side to null (unless already changed)
-            if ($intervenant->getAtelier() === $this) {
-                $intervenant->setAtelier(null);
-            }
-        }
-
-        return $this;
-    }
 
     public function getSalle(): ?Salle
     {
@@ -285,6 +258,30 @@ class Atelier
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Intervenant>
+     */
+    public function getIntervenants(): Collection
+    {
+        return $this->intervenants;
+    }
+
+    public function addIntervenant(Intervenant $intervenant): static
+    {
+        if (!$this->intervenants->contains($intervenant)) {
+            $this->intervenants->add($intervenant);
+        }
+
+        return $this;
+    }
+
+    public function removeIntervenant(Intervenant $intervenant): static
+    {
+        $this->intervenants->removeElement($intervenant);
 
         return $this;
     }

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Lycee;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,6 +20,15 @@ class LyceeRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Lycee::class);
+    }
+
+    public function findLyceeByUserAdmin(User $user): ?Lycee
+    {
+        return $this->createQueryBuilder('l')
+            ->andWhere(':user MEMBER OF l.userAdmin')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 
 //    /**
