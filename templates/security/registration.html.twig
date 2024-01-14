@@ -4,14 +4,17 @@
 
 {% block body %}
 
+<div id="login" class="container d-flex align-items-center justify-content-center">
     <form method="post">
+        <div class="card text-center">
+            <div class="card-body">
+                <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
 
-
-        <h1 class="h3 mb-3 font-weight-normal">Please register</h1>
-
-        {{ form_start(form) }}
-        {{ form_widget(form) }}
-        {{ form_end(form) }}
-
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+                {{ form_end(form) }}
+            </div>
+        </div>
     </form>
+</div>
 {% endblock %}
