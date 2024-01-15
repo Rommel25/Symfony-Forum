@@ -13,9 +13,8 @@ php bin/console doctrine:fixtures:load          # Peut prendre un peu de temps a
 
 ## Commandes
 ```shell
-php bin/console user:create # Créer un User
-php bin/console workshop:assign-rooms # Assigner une salle aux ateliers
-php bin/console hash:students # Hasher tous les étudiant non hashés
+php bin/console app:AutoAssign # La commande d’assignation : On remplit les salles avec les ateliers jusqu’à finir l’attribution
+php bin/console app:encrypt-data # La commande de hash : Hash les utilisateur en utilisant md5
 ```
 
 ## Utilisateurs
