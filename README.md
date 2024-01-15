@@ -2,10 +2,10 @@
 <hr>
 
 
-  <li>Maxime CHOSTAK</li>
-  <li>Antoine FALGIGLIO</li>
-  <li>Mateo CARCIU</li>
-  <li>Paul NIGGLI</li>
-
+  - Maxime CHOSTAK
+  - Antoine FALGIGLIO
+  - Mateo CARCIU
+  - Paul NIGGLI
+ 
 
 <hr>
