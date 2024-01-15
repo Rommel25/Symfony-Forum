@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Atelier;
+use App\Entity\Lyceen;
 use App\Entity\Questionnaire;
 use App\Entity\Sponsor;
 use App\Entity\User;
@@ -51,20 +52,20 @@ class UserController extends AbstractController
 
     #[Route('/questionnaire', name: 'app_questionnaire', methods: ['GET', 'POST'])]
     #[IsGranted("ROLE_USER")]
-    public function questionnaire(Request $request, AuthenticationUtils $authenticationUtils, Security $security, QuestionnaireRepository $questionnaireRepository, SessionInterface $session): Response
+    public function questionnaire(Request $request, AuthenticationUtils $authenticationUtils, Security $security, QuestionnaireRepository $questionnaireRepository, SessionInterface $session, EncryptDataService $encryptDataService, LyceenRepository $lyceenRepository): Response
     {
         $questionnaire = $questionnaireRepository->findLast();
         $form = $this->createForm(QuestionnaireType::class, null, [
             'questionnaire' => $questionnaire
         ]);
+        $lyceen = $lyceenRepository->findOneBy(['user'=>$this->getUser()]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($form->getData() as $reponse) {
                 $this->entityManager->persist($reponse);
             };
+            $encryptDataService->hashService($lyceen);
             $this->entityManager->flush();
-            $lyceen = $this->lyceenRepository->findOneBy(['user' => $this->getUser()]);
-//            $this->encryptDataService->hashService($lyceen);
             $session->getFlashBag()->add('success', 'Vos réponses ont bien été enregistrés');
             return $this->redirectToRoute('app_profile');
         }
